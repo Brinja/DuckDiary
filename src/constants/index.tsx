@@ -1,3 +1,5 @@
+export const THEMACOLOR = '#FFFFFF';
+
 export const ACT_LOAD_PROFILE = 'ACT_LOAD_PROFILE';
 export const ACT_LOAD_LOCAL_DIARY = 'ACT_LOAD_LOCAL_DIARY';
 export const ACT_MOCK_LOCAL = 'ACT_MOCK_LOCAL';
