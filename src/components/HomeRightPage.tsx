@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
+  SafeAreaView,
   View,
   Text,
 } from 'react-native';
+
+import { THEMACOLOR } from '../constants';
 
 class HomeRightPage extends Component {
   render() {
     const { navigation } = this.props;
     return(
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: THEMACOLOR }}>
         <Text onPress={() => {navigation.goBack()}}> On The Right </Text>
-      </View>
+      </SafeAreaView>
     );
   }
 }

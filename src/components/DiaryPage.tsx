@@ -7,15 +7,15 @@ import {
 
 import { THEMACOLOR } from '../constants';
 
-class HomeLeftPage extends Component {
+class DiaryPage extends Component {
   render() {
     const { navigation } = this.props;
     return(
       <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: THEMACOLOR }}>
-        <Text onPress={() => {navigation.goBack()}}> On The Left </Text>
+        <Text onPress={() => {navigation.goBack()}}> On My Diary </Text>
       </SafeAreaView>
     );
   }
 }
 
-export default HomeLeftPage;
+export default DiaryPage;
