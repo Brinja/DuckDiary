@@ -7,11 +7,13 @@ const addLocalDiary = async(info) => {
   try {
     const data = await loadLocalDiary();
 
+    let newData = [];
     if(data == undefined || !Array.isArray(data)){
-      return false;
+      newData.push(info);
     }
-
-    const newData = [...data, info];
+    else {
+      newData = [...data, info];
+    }
 
     await AsyncStorage.setItem(DI.MY_DIARY, JSON.stringify(newData));
     return true;

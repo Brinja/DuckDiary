@@ -5,11 +5,13 @@ import getDuck from './getDuck';
 const addDuck = async(info) => {
   try {
     const data = await getDuck();
+    let newData = [];
     if(data == undefined || !Array.isArray(data)){
-      return false;
+      newData.push(info);
     }
-
-    const newData = [...data, info];
+    else {
+      newData = [...data, info];
+    }
 
     await AsyncStorage.setItem(DP.DUCK_PROFILE, JSON.stringify(newData));
     return true;

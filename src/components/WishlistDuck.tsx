@@ -4,36 +4,29 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground,
 
 const WindowWidth = Dimensions.get('window').width;
 
-const WishlistDuck = ({navigation, info}) => {
-  const {id, name, uri, url, date_time } = info ;
+const WishlistDuck = ({navigation, info, removeItem}) => {
+  const {id, name, uri, url, date_time, info_url } = info ;
   //console.log('AAAa = ' + url);
-  let localURL;
-  if (id === undefined){
-    localURL = 'https://www.masterfile.com/search/en/duck+farm+in+asia';
-  }
-  else {
-    switch (id) {
-      case '111':
-        localURL = 'https://www.tchgroup.com.my/farm.html';
-        break;
-      case '222':
-        localURL = 'https://www.pdi.com.my/about-us/';
-        break;
-      case '333':
-        localURL = 'https://www.birds.cornell.edu/crows/domducks.htm';
-        break;
-      case '444':
-        localURL = 'https://www.masterfile.com/search/en/duck+farm+in+asia';
-        break;
-      default:
-        localURL = 'https://www.masterfile.com/search/en/duck+farm+in+asia';
-        break;
-    }
+  if(url === undefined || url == '') {
+    return(
+      <View style={duckStyle.container}>
+      <TouchableOpacity onPress={() => navigation.navigate('LocalStore', {uri: info_url})} >
+        <View style={duckStyle.container2} >
+          <ImageBackground style={duckStyle.image}
+            source={require('../assets/duck.jpeg')} >
+            <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+              <Text>{name}</Text>
+            </View>
+          </ImageBackground>
+        </View>
+      </TouchableOpacity>
+      </View>
+    );
   }
 
   return(
     <View style={duckStyle.container}>
-    <TouchableOpacity onPress={() => navigation.navigate('LocalStore', {uri: localURL})} >
+    <TouchableOpacity onPress={() => navigation.navigate('LocalStore', {uri: info_url})} >
       <View style={duckStyle.container2} >
         <ImageBackground style={duckStyle.image}
           source={{uri: url,}} >
@@ -42,7 +35,7 @@ const WishlistDuck = ({navigation, info}) => {
           </View>
           <View style={{position: 'absolute', top: 250, left: WindowWidth - 100, right: 0, bottom: 10, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
             <Text style={duckStyle.text1}
-                  onPress={() => {}}
+                  onPress={() => removeItem(id, name)}
             > -Remove </Text>
           </View>
         </ImageBackground>

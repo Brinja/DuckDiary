@@ -165,8 +165,8 @@ class GateWay {
     {
       throw new Error('No data');
     }
-    console.log("url: " + url);
-    console.log("body: " + body);
+    //console.log("url: " + url);
+    //console.log("body: " + body);
 
     let requestMsg = {};
 
