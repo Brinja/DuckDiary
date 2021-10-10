@@ -22,7 +22,7 @@ const ImageContent = ({navigation, info}) => {
     <TouchableOpacity onPress={() => navigation.navigate('Diary', {duck_id: id})} >
       <View style={duckStyle.container2} >
         <ImageBackground style={duckStyle.image}
-          source={{uri: url,}} >
+          source={{uri: uri,}} >
           <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
             <Text>{date_time}</Text>
           </View>

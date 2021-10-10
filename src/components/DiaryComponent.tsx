@@ -85,8 +85,6 @@ const diaryStyle = StyleSheet.create(
       borderBottomRightRadius: 20,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      // marginLeft: 15,
-      // marginRight: 15,
     },
     container3:
     {
@@ -108,7 +106,7 @@ const diaryStyle = StyleSheet.create(
       marginBottom: 0,
       marginLeft: 0,
       marginRight: 0,
-      backgroundColor: 'transparent' ,
+      backgroundColor: 'transparent',
       //borderColor: '#868f9e',
       borderRadius: 0,
       borderWidth: 0,

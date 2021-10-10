@@ -5,14 +5,14 @@ import { View, Text,
 import DuckElement from './DuckElement';
 
 const DuckComponent = ({navigation, info}) => {
-  const { contents } = info === undefined ? {} : info;
+  //const { contents } = info === undefined ? {} : info;
 
   const DATA = [];
-  for(let i = 1; i <= contents.length; i++)
+  for(let i = 0; i < info.length; i++)
   {
     const dataElement = {
       id: '0' + i,
-      content: contents[i - 1 ],
+      content: info[i],
       navigation: navigation,
     };
 

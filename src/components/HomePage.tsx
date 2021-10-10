@@ -18,136 +18,73 @@ import { THEMACOLOR } from '../constants';
 import HeaderComponent from './HeaderComponent';
 import DuckComponent from './DuckComponent';
 
+import { manageDiaryAction } from '../actions/manageDiaryAction';
+import manageDiary from '../reducers/manageDiary';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-class HomePage extends Component<Props> {
+//Component<Props>
+
+class HomePage extends Component {
+  componentDidMount()
+  {
+    //console.log('Mount ->');
+    const currentProps = this.props;
+    //currentProps.onLoadDiary();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot)
+  {
+    //console.log('Update -> ');
+  }
+
+  componentWillUnmount()
+  {
+    //const currentProps = this.props;
+    //currentProps.onClearList();
+  }
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, onLoadDiary, diary } = this.props;
     const info = {
       name : 'AAAA',
     };
 
-    const duck1 = {
-      id : '1111',
-      name: 'AAA',
-      uri: ' ',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/Amagash.png',
+    let DATA = [];
+    if(diary == undefined || !Array.isArray(diary) || diary.length == 0) {
+      //console.log('DIARY !!!!!!!');
     }
-
-    const duck2 = {
-      id : '2222',
-      name: 'BBB',
-      uri: ' ',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/Cajs.png',
-    }
-    // https://reactnative.dev/img/tiny_logo.png
-    // https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/Cajs.png
-    const duck3 = {
-      id : '3333',
-      name: 'CCC',
-      uri: ' ',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/David-Thapa.png',
-    }
-
-    const duck4 = {
-      id : '4444',
-      name: 'DDDD',
-      uri: ' ',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/bgauduch.png',
-    }
-
-    const content1 = [{
-      ...duck1,
-      date_time: '20 Jan 2020',
-    }, {
-      ...duck1,
-      date_time: '21 Jan 2020',
-    }, {
-      ...duck1,
-      date_time: '22 Jan 2020',
-    }, {
-      ...duck1,
-      date_time: '23 Jan 2020',
-    }];
-    const content2 = [{
-      ...duck2,
-      date_time: '10 Aug 2021',
-    }, {
-      ...duck2,
-      date_time: '20 Aug 2021',
-    }, {
-      ...duck2,
-      date_time: '10 Sep 2021',
-    }, {
-      ...duck2,
-      date_time: '30 Aug 2021',
-    }];
-    const content3 = [{
-      ...duck3,
-      date_time: '10 Mar 2021',
-    }, {
-      ...duck3,
-      date_time: '20 Mar 2021',
-    }, {
-      ...duck3,
-      date_time: '10 Aug 2021',
-    }, {
-      ...duck3,
-      date_time: '30 Aug 2021',
-    }];
-    const content4 = [{
-      ...duck4,
-      date_time: '10 Oct 2021',
-    }, {
-      ...duck4,
-      date_time: '11 Oct 2021',
-    }, {
-      ...duck4,
-      date_time: '12 Oct 2021',
-    }, {
-      ...duck4,
-      date_time: '13 Oct 2021',
-    }];
-
-    const info1 = {
-      contents : content1,
-    };
-
-    const info2 = {
-      contents : content2,
-    };
-
-    const info3 = {
-      contents : content3,
-    };
-
-    const info4 = {
-      contents : content4,
-    };
-
-    const DATA = [
-      { id: '01',
-        info: info1,
-        navigation: navigation,
-      },
-      { id: '02',
-        info: info2,
-        navigation: navigation,
-      },
-      { id: '03',
-        info: info3,
-        navigation: navigation,
-      },
-      { id: '04',
-        info: info4,
-        navigation: navigation,
-      },
+    else {
+      for(let i = 0 ; i < diary.length; i++)
       {
-        id: 'FFFFF999FFF',
-      },
-    ];
+        const { notes, duck_id } = diary[i];
+        //console.log('!!!!! = ' + JSON.stringify(diary[i]));
+        //console.log('!!!!! ??? = ' + duck_id);
+
+        let contents = [];
+        for(let j = 0; j < notes.length; j++){
+            // add duck id into content
+            const newContent = {
+              ...notes[j],
+              id: duck_id,
+            };
+
+            contents.push(newContent);
+        }
+
+        const data_info = {
+          id: '00' + i,
+          info: contents,
+          navigation: navigation,
+        };
+
+        DATA.push(data_info);
+      }
+    }
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: THEMACOLOR }}>
@@ -173,4 +110,19 @@ const renderItems = ({item}) =>
           </View>);
 };
 
-export default HomePage;
+function mapStateToProps(state){
+  //console.log('mapStateToProps');
+  const { diary } = state.manageDiary;
+  return {
+    diary,
+  };
+}
+
+function mapDispatchToProps(dispatch)
+{
+  return{
+      onLoadDiary: () => {dispatch(manageDiaryAction.loadDiary());},
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

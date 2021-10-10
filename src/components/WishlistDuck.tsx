@@ -6,6 +6,7 @@ const WindowWidth = Dimensions.get('window').width;
 
 const WishlistDuck = ({navigation, info, removeItem}) => {
   const {id, name, uri, url, date_time, info_url } = info ;
+  let addedDuck = false;
   //console.log('AAAa = ' + url);
   if(url === undefined || url == '') {
     return(
