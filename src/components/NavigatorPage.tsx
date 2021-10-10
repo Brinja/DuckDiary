@@ -7,6 +7,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import HomeLeftPage from './HomeLeftPage';
 import HomeTabPage from './HomeTabPage';
 import DiaryPage from './DiaryPage';
+import ProfilePage from './ProfilePage';
+import AddDuck from './AddDuck';
+import LocalStore from './LocalStore';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +23,9 @@ export default class NavigatorPage extends Component {
           }}>
           <Stack.Screen name="HomeTab" component={HomeTabPage} />
           <Stack.Screen name="Diary" component={DiaryPage} />
+          <Stack.Screen name="AddDuck" component={AddDuck} />
+          <Stack.Screen name="Profile" component={ProfilePage} />
+          <Stack.Screen name="LocalStore" component={LocalStore} />
         </Stack.Navigator>
       </NavigationContainer>
     );

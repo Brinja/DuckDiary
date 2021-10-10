@@ -1,59 +1,50 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground,
-        SafeAreaView, Dimensions } from 'react-native';
+        SafeAreaView, Dimensions, Platform } from 'react-native';
 
-const DuckElement = ({navigation, duckInfo}) => {
-  return(
-    <View style={duckStyle.container} >
-      <ImageContent navigation={navigation} info={duckInfo} />
-    </View>
-  );
-};
+const WindowWidth = Dimensions.get('window').width;
 
-const ImageContent = ({navigation, info}) => {
-  //const id = '12345';
-  //const iUrl = 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/Amagash.png';
-  //console.log('AAAAaA  = ' + JSON.stringify(info));
+const DuckStar = ({navigation, info}) => {
   const {id, name, uri, url, date_time } = info ;
   //console.log('AAAa = ' + url);
 
   return(
-    <View>
-    <TouchableOpacity onPress={() => navigation.navigate('Diary', {duck_id: id})} >
+    <View style={duckStyle.container}>
+    <TouchableOpacity onPress={() => { } } >
       <View style={duckStyle.container2} >
         <ImageBackground style={duckStyle.image}
           source={{uri: url,}} >
           <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
-            <Text>{date_time}</Text>
+            <Text>{name} {' - '} {date_time} </Text>
           </View>
         </ImageBackground>
       </View>
     </TouchableOpacity>
     </View>
   );
-}
+};
 
 const duckStyle = StyleSheet.create(
   {
     container:
     {
-      flex: 0,
-      width: 150,
+      flex: 1,
+      width: WindowWidth,
       justifyContent: 'flex-start',
       alignItems: 'stretch',
       backgroundColor: 'transparent',
       marginTop: 10,
       marginBottom: 10,
-      marginLeft: 0,
-      marginRight: 0,
+      marginLeft: 15,
+      marginRight: 15,
     },
     container2:
     {
       flex: 0,
       justifyContent: 'flex-start',
       alignItems: 'stretch',
-      width: 150,
-      height: 150,
+      width: WindowWidth - 30,
+      height: 280,
       backgroundColor: 'transparent',
       borderBottomLeftRadius: 10,
       borderBottomRightRadius: 10,
@@ -91,4 +82,4 @@ const duckStyle = StyleSheet.create(
   }
 );
 
-export default DuckElement;
+export default DuckStar;
