@@ -8,55 +8,68 @@ import {
 import { THEMACOLOR } from '../constants';
 import WishlistDuck from './WishlistDuck';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { localWishlistAction } from '../actions/localWishlistAction';
+import localWishlist from '../reducers/localWishlist';
+
 class HomeLeftPage extends Component {
+  componentDidMount()
+  {
+    //console.log('Mount ->');
+    const currentProps = this.props;
+    currentProps.onFetchList();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot)
+  {
+    //console.log('Update -> ');
+  }
+
+  componentWillUnmount()
+  {
+    //const currentProps = this.props;
+    //currentProps.clearWishlist();
+  }
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, onRemoveWishlist, images } = this.props;
 
-    const info1 = {
-      id: '111',
-      name: 'Asia Duck',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/zesterquinn.png',
-    };
+    let DATA = [];
+    if(images == undefined || !Array.isArray(images) || images.length == 0){
+      const info = {
+        id: 'NA',
+        name: 'You have No Duck in Wishlist !',
+        url: '',
+      };
 
-    const info2 = {
-      id: '222',
-      name: 'Africa Duck',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/yodur2potassium.png',
-    };
-
-    const info3 = {
-      id: '333',
-      name: 'Europe Duck',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/yannbertrand.png',
-    };
-
-    const info4 = {
-      id: '444',
-      name: 'America Duck',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/werikgpaula.png',
-    };
-
-    const DATA = [
-      { id: '01',
-        info: info1,
+      const data_info = {
+        id: '01',
+        info: info,
         navigation: navigation,
-      },
-      { id: '02',
-        info: info2,
-        navigation: navigation,
-      },
-      { id: '03',
-        info: info3,
-        navigation: navigation,
-      },
-      { id: '04',
-        info: info4,
-        navigation: navigation,
-      },
-      {
-        id: 'FFFFF999FFF',
-      },
-    ];
+      };
+
+      DATA.push(data_info);
+    }
+    else {
+      for(let i = 0 ; i < images.length ; i++){
+        const info = {
+          id: images[i].id,
+          name: images[i].name,
+          url: images[i].url,
+          info_url: images[i].info_url,
+        };
+
+        const data_info = {
+          id: '0' + i,
+          info: info,
+          navigation: navigation,
+          func: onRemoveWishlist,
+        };
+
+        DATA.push(data_info);
+      }
+    }
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: THEMACOLOR, }}>
@@ -73,7 +86,7 @@ class HomeLeftPage extends Component {
 const renderItems = ({item}) =>
 {
   if(item.id != 'FFFFF999FFF'){
-    return (<WishlistDuck navigation={item.navigation} info={item.info} />);
+    return (<WishlistDuck navigation={item.navigation} info={item.info} removeItem={item.func} />);
   }
 
   return (<View style={{flex: 1, alignItems:'center'}}>
@@ -81,4 +94,21 @@ const renderItems = ({item}) =>
           </View>);
 };
 
-export default HomeLeftPage;
+function mapStateToProps(state){
+  //console.log('mapStateToProps');
+  const { images } = state.localWishlist;
+  return {
+    images,
+  };
+}
+
+function mapDispatchToProps(dispatch)
+{
+  return{
+      onFetchList: () => {dispatch(localWishlistAction.loadWishlist());},
+      onClearList: () => {dispatch(localWishlistAction.clearWishlist());},
+      onRemoveWishlist: (id, name) => {dispatch(localWishlistAction.removeWishist(id, name));},
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeLeftPage);
