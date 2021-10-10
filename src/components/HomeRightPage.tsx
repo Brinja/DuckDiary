@@ -8,59 +8,70 @@ import {
 import { THEMACOLOR } from '../constants';
 import DuckStar from './DuckStar';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchDuckListAction } from '../actions/fetchDuckListAction';
+import exploreDuck from '../reducers/exploreDuck';
+
 class HomeRightPage extends Component {
+
+  componentDidMount()
+  {
+    //console.log('Mount ->');
+    const currentProps = this.props;
+    currentProps.onFetchList();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot)
+  {
+    //console.log('Update -> ');
+  }
+
+  componentWillUnmount()
+  {
+    //const currentProps = this.props;
+    //currentProps.onClearList();
+  }
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, images, onAddWishlist } = this.props;
 
-    const info1 = {
-      id: '111',
-      name: 'John',
-      date_time: '10 Jan 2021',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/zesterquinn.png',
-    };
+    const DATA = [];
+    if(images == undefined || !Array.isArray(images) || images.length == 0){
+      const info = {
+        id: '000',
+        name: 'Loading...',
+        date_time: 'loading...',
+        url: '',
+      };
 
-    const info2 = {
-      id: '222',
-      name: 'Alex',
-      date_time: '07 Oct 2021',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/yodur2potassium.png',
-    };
-
-    const info3 = {
-      id: '333',
-      name: 'Lyly',
-      date_time: '11 Sep 2021',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/yannbertrand.png',
-    };
-
-    const info4 = {
-      id: '444',
-      name: 'Jess',
-      date_time: '28 Apr 2021',
-      url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/werikgpaula.png',
-    };
-
-    const DATA = [
-      { id: '01',
-        info: info1,
+      const data_list = {
+        id: '01',
+        info: info,
         navigation: navigation,
-      },
-      { id: '02',
-        info: info2,
-        navigation: navigation,
-      },
-      { id: '03',
-        info: info3,
-        navigation: navigation,
-      },
-      { id: '04',
-        info: info4,
-        navigation: navigation,
-      },
-      {
-        id: 'FFFFF999FFF',
-      },
-    ];
+      };
+
+      DATA.push(data_list);
+    }
+    else {
+      for(let i = 0; i < images.length ; i++){
+        const info = {
+          id: '000' + i,
+          name: images[i].name,
+          date_time: images[i].date_time,
+          url: images[i].url,
+        };
+
+        const data_list = {
+          id: '0' + i,
+          info: info,
+          navigation: navigation,
+          func : onAddWishlist,
+        };
+
+        DATA.push(data_list);
+      }
+    }
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: THEMACOLOR, }}>
@@ -77,7 +88,7 @@ class HomeRightPage extends Component {
 const renderItems = ({item}) =>
 {
   if(item.id != 'FFFFF999FFF'){
-    return (<DuckStar navigation={item.navigation} info={item.info} />);
+    return (<DuckStar navigation={item.navigation} info={item.info} addWishList={item.func} />);
   }
 
   return (<View style={{flex: 1, alignItems:'center'}}>
@@ -85,4 +96,22 @@ const renderItems = ({item}) =>
           </View>);
 };
 
-export default HomeRightPage;
+
+function mapStateToProps(state){
+  //console.log('mapStateToProps');
+  const { images } = state.exploreDuck;
+  return {
+    images,
+  };
+}
+
+function mapDispatchToProps(dispatch)
+{
+  return{
+      onFetchList: () => {dispatch(fetchDuckListAction.fetchDuckList());},
+      onClearList: () => {dispatch(fetchDuckListAction.clearDuckList());},
+      onAddWishlist: (name, url) => {dispatch(fetchDuckListAction.addToWishList(name, url));},
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeRightPage);

@@ -40,6 +40,11 @@ const WishlistDuck = ({navigation, info}) => {
           <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
             <Text>{name}</Text>
           </View>
+          <View style={{position: 'absolute', top: 250, left: WindowWidth - 100, right: 0, bottom: 10, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+            <Text style={duckStyle.text1}
+                  onPress={() => {}}
+            > -Remove </Text>
+          </View>
         </ImageBackground>
       </View>
     </TouchableOpacity>
@@ -90,6 +95,22 @@ const duckStyle = StyleSheet.create(
       color: '#F01020',
       fontSize: 20 ,
       fontWeight: '100',
+      textDecorationLine: 'none',
+      textAlign: 'left',
+      alignSelf: 'flex-start',
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      borderRadius: 0,
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+      borderWidth:  0 ,
+    },
+    text1:{
+      color: '#ebcb65',
+      fontSize: 12,
+      fontWeight: '500',
       textDecorationLine: 'none',
       textAlign: 'left',
       alignSelf: 'flex-start',
