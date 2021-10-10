@@ -4,39 +4,45 @@ import { View, TouchableOpacity, Text,
 
 const WindowWidth = Dimensions.get('window').width;
 
-const HeaderComponent = ({navigation, info}) => {
+const DuckProfile = ({navigation, info}) => {
+  const {id, name, uri, url, date_time, date_birth } = info ;
+
   return(
     <View style={headerStyle.container}>
       <View style={{flex: 0, flexDirection: 'row', alignItems: 'stretch',}}>
-        <AppLogo navigation={navigation} info={info} />
-        <AppName />
+        <DuckLogo navigation={navigation} uri={uri} url={url} />
+        <DuckName name={name} date_birth={date_birth} />
       </View>
       <View style={{flex: 0, width: 130, height: 120, marginLeft: 15,}} >
       <Text style={{color: '#426c82', fontSize: 20 , fontWeight: '400',}}
-            onPress={() => {navigation.navigate('AddDuck')}}
-        > + Add Duck </Text>
+            onPress={() => {navigation.navigate('AddDiary')}}
+        > + Add Diary </Text>
       </View>
     </View>
   );
 }
-//<View style={headerStyle.container}>
-//</View>
-const AppLogo = ({navigation, info}) => {
+// source={{uri: uri,}}
+
+const DuckLogo = ({navigation, uri, url}) => {
+  const isURI = uri == '' ? false : true;
+
   return(
+    <TouchableOpacity onPress={() => {navigation.goBack()}} >
     <View>
-      <TouchableOpacity onPress={() => {navigation.navigate('Profile')}} >
         <Image style={headerStyle.image}
            source={require('../assets/duck.jpeg')}
         />
-      </TouchableOpacity>
     </View>
+    </TouchableOpacity>
   );
 };
 
-const AppName = ({info}) => {
+const DuckName = ({name, date_birth}) => {
+  const addedDate = date_birth == undefined ? 'on that day !' : date_birth;
   return(
-    <View style={{flex: 0, width: 180, height: 100, marginRight: 15, }} >
-      <Text style={headerStyle.text}>  Wahah !</Text>
+    <View style={{flex: 0, width: 180, height: 100, marginRight: 15, flexDirection: 'column' ,}} >
+      <Text style={headerStyle.text}> {name} </Text>
+      <Text style={headerStyle.text2}> {'Added : '} {addedDate} </Text>
     </View>
   );
 };
@@ -98,7 +104,23 @@ const headerStyle = StyleSheet.create(
       borderColor: 'transparent',
       borderWidth:  0,
     },
+    text2:{
+      color: '#F01020',
+      fontSize: 10 ,
+      fontWeight: '100',
+      textDecorationLine: 'none',
+      textAlign: 'left',
+      alignSelf: 'flex-start',
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      borderRadius: 0,
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+      borderWidth:  0,
+    },
   }
 );
 
-export default HeaderComponent;
+export default DuckProfile;
