@@ -1,4 +1,4 @@
-export const THEMACOLOR = '#FFFFFF';
+export const THEMACOLOR = '#98a39d';
 
 export const ACT_LOAD_PROFILE = 'ACT_LOAD_PROFILE';
 export const ACT_LOAD_LOCAL_DIARY = 'ACT_LOAD_LOCAL_DIARY';

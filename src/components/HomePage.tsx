@@ -31,37 +31,85 @@ class HomePage extends Component<Props> {
 
     const duck1 = {
       id : '1111',
-      name: '1111',
-      uri: '11111',
+      name: 'AAA',
+      uri: ' ',
       url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/Amagash.png',
     }
 
     const duck2 = {
       id : '2222',
-      name: '2222',
-      uri: '2222',
+      name: 'BBB',
+      uri: ' ',
       url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/Cajs.png',
     }
     // https://reactnative.dev/img/tiny_logo.png
     // https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/Cajs.png
     const duck3 = {
-      id : '33333',
-      name: '2222',
-      uri: '2222',
+      id : '3333',
+      name: 'CCC',
+      uri: ' ',
       url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/David-Thapa.png',
     }
 
     const duck4 = {
-      id : '2222',
-      name: '2222',
-      uri: '2222',
+      id : '4444',
+      name: 'DDDD',
+      uri: ' ',
       url: 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/bgauduch.png',
     }
 
-    const content1 = [duck1, duck2, duck3, duck4];
-    const content2 = [duck1, duck2, duck3, duck4];
-    const content3 = [duck1, duck2, duck3, duck4];
-    const content4 = [duck1, duck2, duck3, duck4];
+    const content1 = [{
+      ...duck1,
+      date_time: '20 Jan 2020',
+    }, {
+      ...duck1,
+      date_time: '21 Jan 2020',
+    }, {
+      ...duck1,
+      date_time: '22 Jan 2020',
+    }, {
+      ...duck1,
+      date_time: '23 Jan 2020',
+    }];
+    const content2 = [{
+      ...duck2,
+      date_time: '10 Aug 2021',
+    }, {
+      ...duck2,
+      date_time: '20 Aug 2021',
+    }, {
+      ...duck2,
+      date_time: '10 Sep 2021',
+    }, {
+      ...duck2,
+      date_time: '30 Aug 2021',
+    }];
+    const content3 = [{
+      ...duck3,
+      date_time: '10 Mar 2021',
+    }, {
+      ...duck3,
+      date_time: '20 Mar 2021',
+    }, {
+      ...duck3,
+      date_time: '10 Aug 2021',
+    }, {
+      ...duck3,
+      date_time: '30 Aug 2021',
+    }];
+    const content4 = [{
+      ...duck4,
+      date_time: '10 Oct 2021',
+    }, {
+      ...duck4,
+      date_time: '11 Oct 2021',
+    }, {
+      ...duck4,
+      date_time: '12 Oct 2021',
+    }, {
+      ...duck4,
+      date_time: '13 Oct 2021',
+    }];
 
     const info1 = {
       contents : content1,

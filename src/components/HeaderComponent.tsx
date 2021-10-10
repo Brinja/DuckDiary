@@ -6,17 +6,18 @@ const WindowWidth = Dimensions.get('window').width;
 
 const HeaderComponent = ({navigation, info}) => {
   return(
+
     <View style={headerStyle.container}>
-    <View style={headerStyle.container2}>
       <View style={{flex: 0, flexDirection: 'row', alignItems: 'center',}}>
         <AppLogo navigation={navigation} info={info} />
         <AppName />
       </View>
     </View>
-    </View>
+
   );
 }
-
+//<View style={headerStyle.container}>
+//</View>
 const AppLogo = ({navigation, info}) => {
   return(
     <View>
@@ -43,14 +44,14 @@ const headerStyle = StyleSheet.create(
       flex: 0,
       flexDirection: 'column' ,
       width: WindowWidth,
-      height: 100,
+      height: 120,
       justifyContent: 'space-between',
       alignItems: 'stretch',
       backgroundColor: 'transparent',
-      marginTop: 0,
+      marginTop: 10,
       marginBottom: 0,
-      marginLeft: 0,
-      marginRight: 0,
+      marginLeft: 10,
+      marginRight: 10,
     },
     container2:
     {
@@ -59,7 +60,7 @@ const headerStyle = StyleSheet.create(
       alignItems: 'center',
       flexDirection: 'row',
       //width: ,
-      height: 150,
+      height: 120,
     },
     image: {
       flex: 0,
@@ -68,11 +69,11 @@ const headerStyle = StyleSheet.create(
       resizeMode: 'contain',
       marginTop: 0,
       marginBottom: 0,
-      marginLeft: 10,
+      marginLeft: 0,
       marginRight: 0,
-      backgroundColor: 'transparent' ,
-      borderColor: 'transparent',
+      backgroundColor: 'transparent',
       borderRadius: 60,
+      //borderColor: '#868f9e',
       borderWidth: 1,
     },
     text:{
