@@ -8,6 +8,8 @@ import localWishlist from '../reducers/localWishlist';
 import manageDuck from '../reducers/manageDuck';
 import manageDiary from '../reducers/manageDiary';
 import manageDuckDiary from '../reducers/manageDuckDiary';
+import shareDuck from '../reducers/shareDuck';
+import manageLogin from '../reducers/manageLogin';
 
 const rootReducer = combineReducers(
   {
@@ -16,6 +18,8 @@ const rootReducer = combineReducers(
     manageDuck,
     manageDiary,
     manageDuckDiary,
+    shareDuck,
+    manageLogin,
   }
 );
 

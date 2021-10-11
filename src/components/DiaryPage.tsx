@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  SafeAreaView,
+  SafeAreaView, StyleSheet,
   View,
   Text, FlatList, Dimensions,
 } from 'react-native';
@@ -11,6 +11,7 @@ import DuckProfile from './DuckProfile';
 import DiaryComponent from './DiaryComponent';
 
 import { manageDiaryAction } from '../actions/manageDiaryAction';
+import { uploadAction } from '../actions/uploadAction';
 import manageDuckDiary from '../reducers/manageDuckDiary';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -35,8 +36,7 @@ class DiaryPage extends Component {
   }
 
   render() {
-    const { navigation, duck_diary, duck_profile } = this.props;
-
+    const { navigation, duck_diary, duck_profile, msg, onClearShareDuck } = this.props;
     //console.log('DIARY ???  = ' + JSON.stringify(duck_diary));
     let DATA = [];
     if(duck_diary == undefined ) {
@@ -70,6 +70,13 @@ class DiaryPage extends Component {
           data={DATA}
           renderItem={(item) => renderItems(item)}
         />
+        { (msg != undefined && msg != '') &&
+        <View style={{position: 'absolute', top: 230, left: 100, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+          <Text style={diaryStyle.text_bnt}
+                onPress={() => {onClearShareDuck()}}
+            > {'>> '}{msg}{' <<'} </Text>
+        </View>
+        }
       </SafeAreaView>
     );
   }
@@ -86,12 +93,35 @@ const renderItems = ({item}) =>
           </View>);
 };
 
+const diaryStyle = StyleSheet.create(
+  {
+    text_bnt:{
+      color: '#c29a44',
+      fontSize: 28 ,
+      fontWeight: '400',
+      textDecorationLine: 'none',
+      textAlign: 'left',
+      alignSelf: 'flex-start',
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      borderRadius: 0,
+      backgroundColor: '#afb5a7',
+      borderColor: 'transparent',
+      borderWidth:  0,
+      borderRadius: 10,
+    },
+  }
+);
+
 function mapStateToProps(state){
   //console.log('mapStateToProps');
-  const { duck_diary, duck_profile } = state.manageDuckDiary;
+  const { duck_diary, duck_profile, msg } = state.manageDuckDiary;
   return {
     duck_diary,
     duck_profile,
+    msg,
   };
 }
 
@@ -99,6 +129,7 @@ function mapDispatchToProps(dispatch)
 {
   return{
       onLoadDuckDiary: (id) => {dispatch(manageDiaryAction.loadDuckDiary(id));},
+      onClearShareDuck: () => {dispatch(uploadAction.clearShareDuckMsg());},
   };
 }
 

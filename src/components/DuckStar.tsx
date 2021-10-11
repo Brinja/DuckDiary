@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground,
 
 const WindowWidth = Dimensions.get('window').width;
 
-const DuckStar = ({navigation, info, addWishList}) => {
+const DuckStar = ({navigation, info, addWishList }) => {
   const {id, name, uri, url, date_time } = info ;
   //console.log('AAAa = ' + url);
 

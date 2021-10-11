@@ -35,6 +35,7 @@ class HomePage extends Component {
     //console.log('Mount ->');
     const currentProps = this.props;
     currentProps.onLoadDiary();
+    currentProps.onClearLogIn();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot)
@@ -122,6 +123,7 @@ function mapDispatchToProps(dispatch)
 {
   return{
       onLoadDiary: () => {dispatch(manageDiaryAction.loadDiary());},
+      onClearLogIn: () => {dispatch(manageDiaryAction.clearLogIn());},
   };
 }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ACT_DISPLAY_WISHLISH_MSG } from '../constants';
 import addWishlist from './addWishlist';
 
 function addDuckToWishlist(next, action)
@@ -28,6 +29,14 @@ function addDuckToWishlist(next, action)
       action.payload = {
         images: data,
       };
+
+      // send added message to user
+      next({
+        type: ACT_DISPLAY_WISHLISH_MSG,
+        payload: {
+          name: '',
+        }
+      });
 
       next(action);
       return;

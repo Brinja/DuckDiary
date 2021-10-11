@@ -59,7 +59,15 @@ class AddDuck extends Component {
 
     ImagePicker.launchImageLibrary(options, (info) => {
       //console.log('INFO = ' + JSON.stringify(info));
+      if(info == undefined){
+        return;
+      }
       const { assets } = info;
+
+      if(assets == undefined){
+        return;
+      }
+
       //console.log('INFO = ' + assets[0].uri);
       this.updateURI(assets[0].uri);
     });

@@ -1,4 +1,5 @@
-import { ACT_LOAD_DIARY, ACT_LOAD_DUCK_DIARY, ACT_ADD_DIARY } from '../constants';
+import { ACT_LOAD_DIARY, ACT_LOAD_DUCK_DIARY, ACT_ADD_DIARY,
+          ACT_CLEAR_LOGIN } from '../constants';
 
 function loadDiary()
 {
@@ -20,6 +21,16 @@ function loadDuckDiary(id)
   }
 }
 
+function clearLogIn()
+{
+  return {
+    type: ACT_CLEAR_LOGIN,
+    payload:{
+      name: '',
+    }
+  }
+}
+
 function addDiary(id, uri, note)
 {
   return {
@@ -36,6 +47,7 @@ const manageDiaryAction = {
   loadDiary,
   loadDuckDiary,
   addDiary,
+  clearLogIn,
 };
 
 export  { manageDiaryAction };
