@@ -38,6 +38,7 @@ class GateWay {
   getMethod()
   {
     return 'GET';
+    //return 'POST';
   }
 
   updateDiaryInfo(info)
@@ -80,7 +81,7 @@ class GateWay {
   {
     return fetch (url, requestMsg)
     .then((response) => {
-      console.log('response : ' + response.status);
+      //console.log('response : ' + response.status);
       if(response.status == 200)
       {
         return response.json();
@@ -115,7 +116,7 @@ class GateWay {
       }
 
       return fetch(url,fetchOptions).then((rsp) =>{
-        console.log(JSON.stringify(rsp));
+        //console.log('RESPONSE = ' + JSON.stringify(rsp));
         return rsp.json();
       }).then((data) =>{
         if(this.checkFetchConitnue(data))
@@ -226,10 +227,10 @@ class GateWay {
       body: body,
     };
 
-    console.log('uploadData: > ' + url);
+    //console.log('uploadData: > ' + url);
 
     return fetch(url, requestMsg).then((data) =>{
-      console.log('uploadData data: ' + JSON.stringify(data));
+      //console.log('uploadData data: ' + JSON.stringify(data));
       return data.json();
     }).then((response) =>{
       return response;

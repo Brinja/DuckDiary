@@ -1,5 +1,6 @@
 import React from 'react';
 import GateWay from './GateWay';
+import { Platform } from 'react-native';
 
 const GET_RANDOM = 'GET_RANDOM';
 const GET_QUACK = 'GET_QUACK';
@@ -23,7 +24,8 @@ class RandomDuck extends GateWay {
       case GET_LIST:
         return baseURL + '/list';
       case POST_UPLOAD_IMAGE:
-        return uploadURL;
+        //return 'http://192.168.1.103:5000/image/secure_zero';
+        return uploadURL + '?format=json';
       default:
         break;
     }
@@ -76,23 +78,37 @@ class RandomDuck extends GateWay {
 
   getUploadBody()
   {
-    const { user_name, duck_id, breed_id, diary_id, passcode, uri, type, fileName, fileSize } = super.getDiaryInfo();
+    const { user_name, duck_id, breed_id, diary_id, passcode, uri, type, name, fileSize, notes } = super.getDiaryInfo();
 
-    console.log('uri: ' + uri);
-    console.log('type: ' + type);
-    console.log('name: ' + fileName);
-    console.log('fileSize: ' + fileSize);
+    //console.log('uri: ' + uri);
+    //console.log('type: ' + type);
+    //console.log('name: ' + name);
+    //console.log('fileSize: ' + fileSize);
 
-    var formData = new FormData();
+//     var formData = new FormData();
+//
+//     formData.append('media', {
+//       uri: uri,
+// //      type: type,
+//       name: name,
+// //      size: fileSize,
+//     });
 
-    formData.append('image', {
-      uri: uri,
-      type: type,
-      name: fileName,
-      size: fileSize,
+    // not sure any side effects with  this, i use this due to "TypeError: Network request failed"
+    //
+    const formData = new FormData();
+    const uriParts = uri.split('.');
+    const fileType = uriParts[uriParts.length - 1];
+    let picName = 'myduck' + Date.now() + '.' + fileType;
+
+    formData.append('file', {
+      name: picName,
+      type: `image/${fileType}`,
+      uri: Platform.OS === 'ios' ? uri.replace('file://', '') : uri,
     });
 
-    return JSON.stringify(formData);
+
+    return formData;
   }
 
   async onSubmitAPI(payload)

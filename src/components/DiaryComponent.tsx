@@ -14,7 +14,7 @@ const DiaryComponent = ({navigation, info}) => {
   return(
     <View style={diaryStyle.container} >
       <DateComponent date_time={date_time} />
-      <PictureComponent uri={uri} url={url} star={star} />
+      <PictureComponent uri={uri} url={url} star={star} shareFunc={() => navigation.navigate('SharePage', {uri: uri})} />
       <NoteComponet notes={text} />
     </View>
   );
@@ -29,7 +29,7 @@ const DateComponent = ({date_time}) => {
   );
 };
 
-const PictureComponent = ({uri, url, star})  => {
+const PictureComponent = ({uri, url, star, shareFunc})  => {
   const iURL = uri == undefined ? url : uri;
   const iStar = star == undefined ? '.' : star;
 
@@ -39,6 +39,11 @@ const PictureComponent = ({uri, url, star})  => {
         source={{uri: uri,}} >
         <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
           <Text>{star}</Text>
+        </View>
+        <View style={{position: 'absolute', top: 250, left: WindowWidth - 100, right: 0, bottom: 10, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+          <Text style={diaryStyle.text1}
+                onPress={() => shareFunc(uri)}
+          > {'->'}Share </Text>
         </View>
       </ImageBackground>
     </View>
@@ -144,6 +149,22 @@ const diaryStyle = StyleSheet.create(
       backgroundColor: 'transparent',
       borderColor: 'transparent',
       borderWidth:  0,
+    },
+    text1:{
+      color: '#ebcb65',
+      fontSize: 14,
+      fontWeight: '500',
+      textDecorationLine: 'none',
+      textAlign: 'left',
+      alignSelf: 'flex-start',
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      borderRadius: 0,
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+      borderWidth:  0 ,
     },
   }
 );

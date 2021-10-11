@@ -6,34 +6,27 @@ import {
   Button,
 } from 'react-native';
 
-import { PermissionsAndroid } from 'react-native';
-import * as ImagePicker from 'react-native-image-picker';
-
 const WindowWidth = Dimensions.get('window').width;
 import { THEMACOLOR } from '../constants';
-import DuckTitle from './DuckTitle';
 
+import { uploadAction } from '../actions/uploadAction';
+import shareDuck from '../reducers/shareDuck';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { manageDiaryAction } from '../actions/manageDiaryAction';
-import manageDuckDiary from '../reducers/manageDuckDiary';
 
-class AddDiary extends Component {
+class SharePage extends Component {
   constructor(props) {
     super(props);
     this.state = {duckNote: ''};
-    this.state = {duckURI: ''};
-
-    this.pickImage = this.pickImage.bind(this);
-    this.addNewDiary = this.addNewDiary.bind(this);
+    this.shareDuck = this.shareDuck.bind(this);
   }
 
-  updateName = (name) =>
+  componentDidMount()
   {
-    //console.log('updateName');
-    this.setState({duckName: name});
-  };
+    const currentProps = this.props;
+    currentProps.onClearShareDuck();
+  }
 
   updateNote = (text) =>
   {
@@ -41,92 +34,34 @@ class AddDiary extends Component {
     this.setState({duckNote: text});
   };
 
-  updateURI = (uri) =>
+  shareDuck = (uri, msg) =>
   {
-    //console.log('updateURI');
-    this.setState({duckURI: uri});
-  };
-
-  pickImage = () =>
-  {
-    //console.log('pickImage');
-    let options = {
-      title: 'Select Image',
-      noData: true,
-      maxWidth: 5500,
-      maxHeight: 5500,
-    };
-    // launchImageLibrary
-    // launchCamera
-
-    ImagePicker.launchImageLibrary(options, (info) => {
-      //console.log('INFO = ' + JSON.stringify(info));
-      if(info == undefined){
-        return;
-      }
-      const { assets } = info;
-
-      if(assets == undefined){
-        return;
-      }
-      console.log('INFO uri = ' + assets[0].uri);
-      console.log('INFO type = ' + assets[0].type);
-      console.log('INFO fileName = ' + assets[0].fileName);
-      console.log('INFO fileSize = ' + assets[0].fileSize);
-      this.updateURI(assets[0].uri);
-    });
-  };
-
-  addNewDiary = (id, uri, note) => {
-    //console.log('addNewDuck');
     const currentProps = this.props;
-    currentProps.onAddDiary(id, uri, note);
+    currentProps.onShareDuck(uri, msg);
     currentProps.navigation.goBack();
-  };
-
+  }
 
   render() {
-    const { navigation, onCreateDuck } = this.props;
-    const { duckName, duckNote, duckURI } = this.state;
-    const info = {
-      date_birth: this.props.route.params.date_birth,
-      name: this.props.route.params.name,
-      profile_uri: this.props.route.params.uri,
-    };
-
-    //console.log('AAAAAaAAA = ' + JSON.stringify(info));
+    const { navigation } = this.props;
+    const { duckNote } = this.state;
 
     return(
       <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: THEMACOLOR }}>
-        <DuckTitle info={info}/>
-        <DuckImage funcPickImage={this.pickImage} uri={duckURI} />
+        <DuckImage uri={this.props.route.params.uri} />
         <DuckNote noteFunc={this.updateNote} textNote={duckNote}/>
         <View style={{flex: 0, flexDirection: 'row', alignItems: 'stretch',}}>
         <Text style={duckStyle.text_bnt} onPress={() => navigation.goBack()} > Cancel </Text>
         <Text>{'                  '} </Text>
-        <Text style={duckStyle.text_bnt} onPress={() => {this.addNewDiary(this.props.route.params.duck_id, duckURI, duckNote)}} > Save </Text>
+        <Text style={duckStyle.text_bnt} onPress={() => {this.shareDuck(this.props.route.params.uri, duckNote)}} > Share </Text>
         </View>
       </SafeAreaView>
     );
   }
 }
 
-const DuckImage = ({funcPickImage, uri}) => {
+const DuckImage = ({uri}) => {
   return(
     <View>
-    { (uri === undefined || uri == '') &&
-      <TouchableOpacity onPress={() => funcPickImage()} >
-        <View style={duckStyle.container2} >
-          <ImageBackground style={duckStyle.image}
-            source={require('../assets/donald_duck.jpeg')} >
-            <View style={{position: 'absolute', top: 120, left: 80, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
-              <Text style={duckStyle.text_title} > {'>>'}Add Picture{'<<'} </Text>
-            </View>
-          </ImageBackground>
-        </View>
-      </TouchableOpacity>
-    }
-    { (uri != undefined && uri != '' ) &&
     <TouchableOpacity onPress={() => {}} >
       <View style={duckStyle.container2} >
         <ImageBackground style={duckStyle.image}
@@ -134,7 +69,6 @@ const DuckImage = ({funcPickImage, uri}) => {
         </ImageBackground>
       </View>
     </TouchableOpacity>
-    }
     </View>
   );
 };
@@ -143,7 +77,7 @@ const DuckNote = ({noteFunc, textNote}) => {
   return(
   <View style={duckStyle.container4} >
     <TextInput style={duckStyle.text}
-              placeholder='>>> Whats about this lovely one today ?                                  '
+              placeholder='>>> Whats about this lovely one ?                                  '
               value = {textNote}
               multiline={true}
               onChangeText = {(text) => noteFunc(text)}
@@ -281,7 +215,7 @@ const duckStyle = StyleSheet.create(
 
 function mapStateToProps(state){
   //console.log('mapStateToProps');
-  const { status } = state.manageDuckDiary;
+  const { status } = state.shareDuck;
   return {
     status,
   };
@@ -290,8 +224,9 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch)
 {
   return{
-      onAddDiary: (id, uri, notes) => {dispatch(manageDiaryAction.addDiary(id, uri, notes));},
+      onShareDuck: (uri, notes) => {dispatch(uploadAction.shareADuck(uri, notes));},
+      onClearShareDuck: () => {dispatch(uploadAction.clearShareDuckMsg());},
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddDiary);
+export default connect(mapStateToProps, mapDispatchToProps)(SharePage);
