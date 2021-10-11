@@ -51,7 +51,7 @@ function addNewDuck(next, action)
   };
 
   addDuck(duck).then(data => {
-    console.log('??? DUCK ADDED');
+    //console.log('??? DUCK ADDED');
 
     // add diary too
     const diary = {
@@ -68,7 +68,7 @@ function addNewDuck(next, action)
     addLocalDiary(diary).then(res => {
       // load diary and move to Home Page
       //
-      console.log('??? DIARY ADDED');
+      //console.log('??? DIARY ADDED');
       loadLocalDiary().then(my_diary => {
         //console.log('my_diary = ' + JSON.stringify(my_diary));
         next({

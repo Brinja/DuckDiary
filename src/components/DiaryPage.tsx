@@ -10,62 +10,61 @@ import { THEMACOLOR } from '../constants';
 import DuckProfile from './DuckProfile';
 import DiaryComponent from './DiaryComponent';
 
+import { manageDiaryAction } from '../actions/manageDiaryAction';
+import manageDuckDiary from '../reducers/manageDuckDiary';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 class DiaryPage extends Component {
+  componentDidMount()
+  {
+    //console.log('Mount ->');
+    const currentProps = this.props;
+    currentProps.onLoadDuckDiary(currentProps.route.params.duck_id);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot)
+  {
+    //console.log('Update -> ');
+  }
+
+  componentWillUnmount()
+  {
+    //const currentProps = this.props;
+    //currentProps.onClearList();
+  }
+
   render() {
-    const { navigation } = this.props;
-    const info = {
-      name : 'AAAA',
-    };
+    const { navigation, duck_diary, duck_profile } = this.props;
 
-    const info1 = {
-      url: 'https://raw.githubusercontent.com/very-scary-scenario/duck/master/images/duck1-1.png',
-      date_time: '11 Jan 2021',
-      notes: 'wow ow ow wo wow',
+    //console.log('DIARY ???  = ' + JSON.stringify(duck_diary));
+    let DATA = [];
+    if(duck_diary == undefined ) {
+      //console.log('DIARY !!!!!!!');
     }
-
-    const info2 = {
-      url: 'https://raw.githubusercontent.com/very-scary-scenario/duck/master/images/duck15.png',
-      date_time: '11 Feb 2021',
-      notes: 'so \n lovely \n omg \n :) \n hihi',
-    };
-
-    const info3 = {
-      url: 'https://raw.githubusercontent.com/very-scary-scenario/duck/master/images/duck6.png',
-      date_time: '11 Mar 2021',
-      notes: 'he first meet Lyly',
-    };
-
-    const info4 = {
-      url: 'https://raw.githubusercontent.com/very-scary-scenario/duck/master/images/duck9.png',
-      date_time: '11 Apr 2021',
-      notes: 'he went to school he went to schoolhe went to schoolhe went to school he went to school he went to school',
-    };
-
-    const DATA = [
-      { id: '01',
-        info: info1,
-        navigation: navigation,
-      },
-      { id: '02',
-        info: info2,
-        navigation: navigation,
-      },
-      { id: '03',
-        info: info3,
-        navigation: navigation,
-      },
-      { id: '04',
-        info: info4,
-        navigation: navigation,
-      },
+    else {
+      const { notes } = duck_diary;
+      if(notes == undefined)
       {
-        id: 'FFFFF999FFF',
-      },
-    ];
+
+      }
+      else {
+        for(let i = 0; i < notes.length ; i++){
+          const data_info = {
+            id: '00' + i,
+            info: notes[i],
+            navigation: navigation,
+          };
+
+          DATA.push(data_info)
+        }
+      }
+
+    }
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: THEMACOLOR }}>
-        <DuckProfile navigation={navigation} info={info} />
+        <DuckProfile navigation={navigation} info={duck_profile} />
         <FlatList
           keyboardShouldPersistTaps='always'
           data={DATA}
@@ -87,5 +86,20 @@ const renderItems = ({item}) =>
           </View>);
 };
 
+function mapStateToProps(state){
+  //console.log('mapStateToProps');
+  const { duck_diary, duck_profile } = state.manageDuckDiary;
+  return {
+    duck_diary,
+    duck_profile,
+  };
+}
 
-export default DiaryPage;
+function mapDispatchToProps(dispatch)
+{
+  return{
+      onLoadDuckDiary: (id) => {dispatch(manageDiaryAction.loadDuckDiary(id));},
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DiaryPage);

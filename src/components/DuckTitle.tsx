@@ -4,37 +4,31 @@ import { View, TouchableOpacity, Text,
 
 const WindowWidth = Dimensions.get('window').width;
 
-const DuckProfile = ({navigation, info}) => {
-  const { id, about, name, profile_uri , profile_url, date_birth } = info == undefined ? {} : info;
+const DuckTitle = ({info}) => {
+  const { name, profile_uri , date_birth } = info == undefined ? {} : info;
   //console.log('PROFILE URI = ' + profile_uri);
-
+  const profile_url = '';
+  
   return(
     <View style={headerStyle.container}>
       <View style={{flex: 0, flexDirection: 'row', alignItems: 'stretch',}}>
-        <DuckLogo navigation={navigation} uri={profile_uri} url={profile_url} />
+        <DuckLogo uri={profile_uri} url={profile_url} />
         <DuckName name={name} date_birth={date_birth} />
-      </View>
-      <View style={{flex: 0, width: 130, height: 120, marginLeft: 15,}} >
-      <Text style={{color: '#426c82', fontSize: 20 , fontWeight: '400',}}
-            onPress={() => {navigation.navigate('AddDiary', {duck_id: id, name: name, uri: profile_uri, date_birth: date_birth} )}}
-        > + Add Diary </Text>
       </View>
     </View>
   );
 }
 // source={{uri: uri,}}
 
-const DuckLogo = ({navigation, uri, url}) => {
+const DuckLogo = ({uri, url}) => {
   //const isURI = uri == '' ? false : true;
 
   return(
-    <TouchableOpacity onPress={() => {navigation.goBack()}} >
     <View>
         <Image style={headerStyle.image}
            source={{uri: uri}}
         />
     </View>
-    </TouchableOpacity>
   );
 };
 
@@ -124,4 +118,4 @@ const headerStyle = StyleSheet.create(
   }
 );
 
-export default DuckProfile;
+export default DuckTitle;

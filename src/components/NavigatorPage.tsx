@@ -10,6 +10,7 @@ import DiaryPage from './DiaryPage';
 import ProfilePage from './ProfilePage';
 import AddDuck from './AddDuck';
 import LocalStore from './LocalStore';
+import AddDiary from './AddDiary';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ export default class NavigatorPage extends Component {
           <Stack.Screen name="AddDuck" component={AddDuck} />
           <Stack.Screen name="Profile" component={ProfilePage} />
           <Stack.Screen name="LocalStore" component={LocalStore} />
+          <Stack.Screen name="AddDiary" component={AddDiary} />
         </Stack.Navigator>
       </NavigationContainer>
     );

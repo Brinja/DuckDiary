@@ -23,12 +23,12 @@ function addDuckToWishlist(next, action)
   };
 
   addWishlist(info).then(data => {
-    //console.log('??? DUCK ADDED');
+    //console.log('??? DUCK ADDED = ' + data);
     if(data){
       action.payload = {
-        status: 'OK',
-        msg: 'Duck Added !',
-      }
+        images: data,
+      };
+
       next(action);
       return;
     }

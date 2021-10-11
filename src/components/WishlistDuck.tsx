@@ -14,9 +14,9 @@ const WishlistDuck = ({navigation, info, removeItem}) => {
       <TouchableOpacity onPress={() => navigation.navigate('LocalStore', {uri: info_url})} >
         <View style={duckStyle.container2} >
           <ImageBackground style={duckStyle.image}
-            source={require('../assets/duck.jpeg')} >
-            <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
-              <Text>{name}</Text>
+            source={require('../assets/duck_footsteps.jpeg')} >
+            <View style={{position: 'absolute', top: 120, left: 110, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+              <Text style={duckStyle.text2} >Ducks ! Ducks !</Text>
             </View>
           </ImageBackground>
         </View>
@@ -105,6 +105,22 @@ const duckStyle = StyleSheet.create(
       color: '#ebcb65',
       fontSize: 12,
       fontWeight: '500',
+      textDecorationLine: 'none',
+      textAlign: 'left',
+      alignSelf: 'flex-start',
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      borderRadius: 0,
+      backgroundColor: 'transparent',
+      borderColor: 'transparent',
+      borderWidth:  0 ,
+    },
+    text2:{
+      color: '#785f26',
+      fontSize: 20 ,
+      fontWeight: '300',
       textDecorationLine: 'none',
       textAlign: 'left',
       alignSelf: 'flex-start',
