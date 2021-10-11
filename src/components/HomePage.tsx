@@ -34,7 +34,7 @@ class HomePage extends Component {
   {
     //console.log('Mount ->');
     const currentProps = this.props;
-    //currentProps.onLoadDiary();
+    currentProps.onLoadDiary();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot)

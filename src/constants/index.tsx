@@ -16,3 +16,5 @@ export const ACT_ADD_DUCK = 'ACT_ADD_DUCK';
 
 
 export const ACT_LOAD_DIARY = 'ACT_LOAD_DIARY';
+export const ACT_LOAD_DUCK_DIARY = 'ACT_LOAD_DUCK_DIARY';
+export const ACT_ADD_DIARY = 'ACT_ADD_DIARY';

@@ -20,13 +20,13 @@ const addWishlist = async(info) => {
     //const newData = [...data, info];
 
     await AsyncStorage.setItem(WI.BREED, JSON.stringify(newData));
-    return true;
+    return newData;
   }
   catch(e) {
     console.log('Store Error  ' + e.message);
   }
 
-  return false;
+  return null;
 };
 
 export default addWishlist;

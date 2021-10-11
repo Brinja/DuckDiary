@@ -8,12 +8,14 @@ import {
 const WindowWidth = Dimensions.get('window').width;
 
 const DiaryComponent = ({navigation, info}) => {
-  const { notes, date_time, uri, url, star } = info;
+  const { text, date_time, uri, url  } = info == undefined ? {} : info;
+  const star = '';
+
   return(
     <View style={diaryStyle.container} >
       <DateComponent date_time={date_time} />
       <PictureComponent uri={uri} url={url} star={star} />
-      <NoteComponet notes={notes} />
+      <NoteComponet notes={text} />
     </View>
   );
 };
@@ -34,7 +36,7 @@ const PictureComponent = ({uri, url, star})  => {
   return(
     <View style={diaryStyle.container2} >
       <ImageBackground style={diaryStyle.image}
-        source={{uri: iURL,}} >
+        source={{uri: uri,}} >
         <View style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
           <Text>{star}</Text>
         </View>
@@ -118,8 +120,8 @@ const diaryStyle = StyleSheet.create(
       textDecorationLine: 'none',
       textAlign: 'left',
       alignSelf: 'flex-start',
-      marginTop: 0,
-      marginBottom: 0,
+      marginTop: 30,
+      marginBottom: 15,
       marginLeft: 0,
       marginRight: 0,
       borderRadius: 0,

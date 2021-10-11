@@ -6,12 +6,12 @@ const updateLocalDiary = async(id, note) => {
   try {
     const data = await loadLocalDiary();
     if(data == undefined || !Array.isArray(data)){
-      return false;
+      return null;
     }
 
     const tempDuck = data.filter(item => item.duck_id == id);
     if(tempDuck == undefined || tempDuck.length == 0){
-      return false;
+      return null;
     }
     const myDuck = tempDuck[0];
 
@@ -28,14 +28,15 @@ const updateLocalDiary = async(id, note) => {
     const newDiary = [...tempData, newDuck];
     await AsyncStorage.setItem(DI.MY_DIARY, JSON.stringify(newDiary));
 
-    return true;
+    // return newDuck at we are working on this specific duck
+    return newDuck;
   }
   catch(e) {
     console.log('eeee= ' + e.message);
-    return false;
+    return null;
   }
 
-  return true;
+  return null;
 };
 
 export default updateLocalDiary;

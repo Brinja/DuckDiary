@@ -7,6 +7,7 @@ import exploreDuck from '../reducers/exploreDuck';
 import localWishlist from '../reducers/localWishlist';
 import manageDuck from '../reducers/manageDuck';
 import manageDiary from '../reducers/manageDiary';
+import manageDuckDiary from '../reducers/manageDuckDiary';
 
 const rootReducer = combineReducers(
   {
@@ -14,6 +15,7 @@ const rootReducer = combineReducers(
     localWishlist,
     manageDuck,
     manageDiary,
+    manageDuckDiary,
   }
 );
 
