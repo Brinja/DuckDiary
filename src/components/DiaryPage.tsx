@@ -37,7 +37,10 @@ class DiaryPage extends Component {
 
   render() {
     const { navigation, duck_diary, duck_profile, msg, onClearShareDuck } = this.props;
-    //console.log('DIARY ???  = ' + JSON.stringify(duck_diary));
+
+    //console.log('DIARY !!! = ' + this.props.route.params.duck_id);
+
+
     let DATA = [];
     if(duck_diary == undefined ) {
       //console.log('DIARY !!!!!!!');

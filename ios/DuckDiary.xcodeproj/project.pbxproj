@@ -114,7 +114,6 @@
 				52285C9238DB7020AE60F50C /* Pods-DuckDiary-DuckDiaryTests.debug.xcconfig */,
 				326BCEEA3D22397BF1F4A330 /* Pods-DuckDiary-DuckDiaryTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
