@@ -1,10 +1,11 @@
+//# State
+import { IWishlistState, initWishlistState } from '../types/IStore';
+
+//# Action
 import { ACT_LOAD_WISHLIST, ACT_REMOVE_WISHLIST, ACT_ADD_DUCK_TO_WISHLIST } from '../constants';
 
 
-const initialState = {
-  images: [],
-  status: '',
-};
+
 
 function onGetWishlist(state, action)
 {
@@ -34,7 +35,10 @@ function onAddDuckToWishList(state, action)
 }
 
 
-function localWishlist(state = initialState, action) {
+export const localWishlist = (
+  state:IWishlistState = initWishlistState,
+   action
+ ):IWishlistState => {
   switch (action.type) {
     case ACT_LOAD_WISHLIST:
       return onGetWishlist(state, action);
@@ -46,6 +50,4 @@ function localWishlist(state = initialState, action) {
     default:
       return state;
   }
-}
-
-export default localWishlist;
+};

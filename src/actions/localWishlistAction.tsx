@@ -1,17 +1,12 @@
 import { ACT_LOAD_WISHLIST, ACT_REMOVE_WISHLIST } from '../constants';
 
-function loadWishlist()
-{
+export const loadWishlist = () => {
   return {
     type: ACT_LOAD_WISHLIST,
-    payload:{
-      name: '',
-    }
   }
-}
+};
 
-function removeWishist(id, name)
-{
+export const removeWishist = (id: string, name: string) => {
   return {
     type: ACT_REMOVE_WISHLIST,
     payload:{
@@ -19,18 +14,4 @@ function removeWishist(id, name)
       id: id,
     }
   }
-}
-
-function clearWishlist()
-{
-
-}
-
-const localWishlistAction =
-{
-  loadWishlist,
-  removeWishist,
-  clearWishlist,
 };
-
-export { localWishlistAction };

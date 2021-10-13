@@ -8,7 +8,7 @@ const DuckTitle = ({info}) => {
   const { name, profile_uri , date_birth } = info == undefined ? {} : info;
   //console.log('PROFILE URI = ' + profile_uri);
   const profile_url = '';
-  
+
   return(
     <View style={headerStyle.container}>
       <View style={{flex: 0, flexDirection: 'row', alignItems: 'stretch',}}>
@@ -57,7 +57,7 @@ const headerStyle = StyleSheet.create(
       //backgroundColor: '#9F29AA',
       marginTop: 10,
       marginBottom: 0,
-      marginLeft: 10,
+      marginLeft: 35,
       marginRight: 10,
     },
     container2:

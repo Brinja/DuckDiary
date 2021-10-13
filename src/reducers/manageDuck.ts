@@ -1,7 +1,10 @@
 import { ACT_ADD_DUCK, } from '../constants';
 
+interface IDuckStore {
+  status: string,
+}
 
-const initialState = {
+const initialState:IDuckStore = {
   status: '',
 };
 
@@ -15,13 +18,14 @@ function onAddDuck(state, action)
 }
 
 
-function manageDuck(state = initialState, action) {
+export const manageDuck = (
+  state: IDuckStore = initialState,
+  action
+):IDuckStore => {
   switch (action.type) {
     case ACT_ADD_DUCK:
       //return onAddDuck(state, action);
     default:
       return state;
   }
-}
-
-export default manageDuck;
+};

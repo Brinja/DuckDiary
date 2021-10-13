@@ -1,8 +1,7 @@
 import { ACT_SHARE_DUCK, ACT_API_SHARE_DUCK_CLEAR_MSG } from '../constants';
 
 
-function shareADuck(uri, notes)
-{
+export const shareADuck = (uri: string, notes: string) =>{
   return {
     type: ACT_SHARE_DUCK,
     payload:{
@@ -10,21 +9,10 @@ function shareADuck(uri, notes)
       notes: notes,
     }
   }
-}
-
-function clearShareDuckMsg(uri, notes)
-{
-  return {
-    type: ACT_API_SHARE_DUCK_CLEAR_MSG,
-    payload:{
-      name: '',
-    }
-  }
-}
-
-const uploadAction = {
-  shareADuck,
-  clearShareDuckMsg,
 };
 
-export  { uploadAction };
+export const clearShareDuckMsg = () =>{
+  return {
+    type: ACT_API_SHARE_DUCK_CLEAR_MSG,
+  }
+};

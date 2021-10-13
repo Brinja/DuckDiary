@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView, TextInput, StyleSheet,
   View, Dimensions, TouchableOpacity,
@@ -9,55 +9,52 @@ import {
 const WindowWidth = Dimensions.get('window').width;
 import { THEMACOLOR } from '../constants';
 
-import { uploadAction } from '../actions/uploadAction';
-import shareDuck from '../reducers/shareDuck';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { shareADuck } from '../actions/uploadAction';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import { IStoreState } from '../types/IStore';
 
 
-class SharePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {duckNote: ''};
-    this.shareDuck = this.shareDuck.bind(this);
-  }
+export const SharePet = () => {
+  const [ duckNote, setDuckNote ] = useState('');
 
-  componentDidMount()
-  {
-    const currentProps = this.props;
-    currentProps.onClearShareDuck();
-  }
+  const route = useRoute();
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const uploadStore = useSelector((state: IStoreState) => state.shareDuck);
 
-  updateNote = (text) =>
-  {
-    //console.log('updateNote');
-    this.setState({duckNote: text});
+  const onChangeText = (func: React.Dispatch<React.SetStateAction<string>>) => (
+    text: string,
+  ) => {
+    func(text);
   };
 
-  shareDuck = (uri, msg) =>
-  {
-    const currentProps = this.props;
-    currentProps.onShareDuck(uri, msg);
-    currentProps.navigation.goBack();
-  }
+  const shareDuck = (uri: string, msg: string) => {
+    dispatch(shareADuck(uri, msg));
+    navigation.goBack();
+  };
 
-  render() {
-    const { navigation } = this.props;
-    const { duckNote } = this.state;
 
-    return(
+  return(
       <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: THEMACOLOR }}>
-        <DuckImage uri={this.props.route.params.uri} />
-        <DuckNote noteFunc={this.updateNote} textNote={duckNote}/>
+        <DuckImage uri={route.params.uri} />
+        <View style={duckStyle.container4} >
+          <TextInput style={duckStyle.text}
+                    placeholder='>>> Whats about this lovely one ?                                  '
+                    value = {duckNote}
+                    multiline={true}
+                    onChangeText = {onChangeText(setDuckNote)}
+          />
+        </View>
         <View style={{flex: 0, flexDirection: 'row', alignItems: 'stretch',}}>
         <Text style={duckStyle.text_bnt} onPress={() => navigation.goBack()} > Cancel </Text>
         <Text>{'                  '} </Text>
-        <Text style={duckStyle.text_bnt} onPress={() => {this.shareDuck(this.props.route.params.uri, duckNote)}} > Share </Text>
+        <Text style={duckStyle.text_bnt} onPress={() => {shareDuck(route.params.uri, duckNote)}} > Share </Text>
         </View>
       </SafeAreaView>
-    );
-  }
-}
+  );
+
+};
 
 const DuckImage = ({uri}) => {
   return(
@@ -70,19 +67,6 @@ const DuckImage = ({uri}) => {
       </View>
     </TouchableOpacity>
     </View>
-  );
-};
-
-const DuckNote = ({noteFunc, textNote}) => {
-  return(
-  <View style={duckStyle.container4} >
-    <TextInput style={duckStyle.text}
-              placeholder='>>> Whats about this lovely one ?                                  '
-              value = {textNote}
-              multiline={true}
-              onChangeText = {(text) => noteFunc(text)}
-    />
-  </View>
   );
 };
 
@@ -212,21 +196,3 @@ const duckStyle = StyleSheet.create(
     },
   }
 );
-
-function mapStateToProps(state){
-  //console.log('mapStateToProps');
-  const { status } = state.shareDuck;
-  return {
-    status,
-  };
-}
-
-function mapDispatchToProps(dispatch)
-{
-  return{
-      onShareDuck: (uri, notes) => {dispatch(uploadAction.shareADuck(uri, notes));},
-      onClearShareDuck: () => {dispatch(uploadAction.clearShareDuckMsg());},
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SharePage);

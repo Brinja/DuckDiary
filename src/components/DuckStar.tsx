@@ -3,10 +3,15 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground,
         SafeAreaView, Dimensions, Platform } from 'react-native';
 
 const WindowWidth = Dimensions.get('window').width;
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import { addToWishList } from '../actions/fetchDuckListAction';
 
-const DuckStar = ({navigation, info, addWishList }) => {
+export const DuckStar = ({info }) => {
   const {id, name, uri, url, date_time } = info ;
   //console.log('AAAa = ' + url);
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   if(url === undefined || url == ''){
     return(
@@ -37,7 +42,7 @@ const DuckStar = ({navigation, info, addWishList }) => {
 
           <View style={{position: 'absolute', top: 250, left: WindowWidth - 100, right: 0, bottom: 10, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
             <Text style={duckStyle.text1}
-                  onPress={() => addWishList(name, url)}
+                  onPress={() => dispatch(addToWishList(name, url))}
             > +Wishlist </Text>
           </View>
         </ImageBackground>
@@ -136,5 +141,3 @@ const duckStyle = StyleSheet.create(
     },
   }
 );
-
-export default DuckStar;

@@ -8,6 +8,11 @@ const GET_RANDOMING = 'GET_RANDOMING';
 const GET_LIST = 'GET_LIST';
 const POST_UPLOAD_IMAGE = 'POST_UPLOAD_IMAGE';
 
+export interface IRandomApi {
+  txnType: number,
+}
+
+
 class RandomDuck extends GateWay {
   getEndPoint(){
     let baseURL = 'https://random-d.uk/api/v2';
@@ -111,7 +116,7 @@ class RandomDuck extends GateWay {
     return formData;
   }
 
-  async onSubmitAPI(payload)
+  async onSubmitAPI(payload: IRandomApi)
   {
     super.updateDiaryInfo(payload);
 
@@ -125,7 +130,7 @@ class RandomDuck extends GateWay {
 
   }
 
-  async onUploadAPI(payload)
+  async onUploadAPI(payload: IRandomApi)
   {
     super.updateDiaryInfo(payload);
 

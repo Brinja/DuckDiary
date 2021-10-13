@@ -4,13 +4,9 @@ import removeWishlist from './removeWishlist';
 function removeLocalWishlist(next, action)
 {
   const { id , name } = action.payload;
-  if(id == undefined || id == ''){
-    next(action);
-    return;
-  }
 
   removeWishlist({id: id, name: name}).then(data => {
-    //console.log('????? ' + JSON.stringify(data));
+    //console.log(' removeLocalWishlist ????? ' + JSON.stringify(data));
     if(data === undefined){
       next(action);
       return;

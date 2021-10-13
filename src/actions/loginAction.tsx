@@ -1,7 +1,6 @@
-import { ACT_API_LOGIN } from '../constants';
+import { ACT_API_LOGIN, ACT_CLEAR_LOGIN } from '../constants';
 
-function startLogIn(username, password)
-{
+export const startLogIn = (username: string, password: string) =>{
   return {
     type: ACT_API_LOGIN,
     payload:{
@@ -9,11 +8,10 @@ function startLogIn(username, password)
       password: password,
     }
   }
-}
-
-
-const loginAction = {
-  startLogIn,
 };
 
-export { loginAction };
+export const  clearLogIn = () =>{
+  return {
+    type: ACT_CLEAR_LOGIN,
+  }
+};

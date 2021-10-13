@@ -1,11 +1,9 @@
+//# Store
+import { IPetDiary, initPetState } from '../types/IStore';
+
+// Action
 import { ACT_LOAD_DUCK_DIARY, ACT_ADD_DIARY, ACT_API_SHARE_DUCK_RES,
         ACT_API_SHARE_DUCK_CLEAR_MSG } from '../constants';
-
-const initialState = {
-  duck_diary: {},
-  duck_profile: {},
-  msg: '',
-};
 
 
 function onLoadDuckDiary(state, action)
@@ -42,7 +40,10 @@ function onClearShareDuckMsg(state, action)
   }
 }
 
-function manageDuckDiary(state = initialState, action) {
+export const manageDuckDiary = (
+  state: IPetDiary = initPetState,
+  action
+): IPetDiary => {
   switch (action.type) {
     case ACT_LOAD_DUCK_DIARY:
       return onLoadDuckDiary(state, action);
@@ -55,6 +56,4 @@ function manageDuckDiary(state = initialState, action) {
     default:
       return state;
   }
-}
-
-export default manageDuckDiary;
+};

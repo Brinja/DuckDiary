@@ -13,7 +13,7 @@ import loadMyDuckDiary from '../steps/loadMyDuckDiary';
 import addNewDiaryNote from '../steps/addNewDiaryNote';
 
 const localMiddleWare = store => next => action =>{
-  //console.log('customMiddleWare : ' + action.type);
+  console.log('customMiddleWare : ' + action.type);
   switch (action.type) {
     case ACT_LOAD_PROFILE:
       return loadProfile(next, action);

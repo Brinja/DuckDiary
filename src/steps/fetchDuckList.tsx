@@ -1,6 +1,7 @@
 import React from 'react';
 import { ACT_API_FETCH_DUCK_LIST } from '../constants';
 import randomDuck from '../api/RandomDuck';
+import { IModelExplorePet } from '../types/IModel';
 
 function fetchDuckList(next, action)
 {
@@ -12,14 +13,6 @@ function fetchDuckList(next, action)
   randomDuck.onSubmitAPI(info).then((response) => analyzeAcqMsg(next, action, response)
   ).catch( (e) =>{
       console.log("fetchDuckList: " + e.message);
-      const duck = {
-        url : 'https://raw.githubusercontent.com/zenika-open-source/the-duck-gallery/master/ducks/zesterquinn.png',
-        name : 'Jessy',
-        date_time: '01 Nov 2021',
-      };
-      action.payload = {
-        images: [duck,],
-      }
       next(action);
       return;
     }
@@ -34,16 +27,18 @@ function analyzeAcqMsg(next, action, msg){
   //console.log(JSON.stringify(msg));
 
   const { images, http } = msg;
-  const imageURL = [];
+  const imageURL: IModelExplorePet[] = [];
   let baseURL = 'https://random-d.uk/api/v2/';
 
-  if(images == undefined && !Array.isArray(images)){
+  if(!images?.length){
     // nothing
+    console.log('fetchDuckList !!!!');
   }
   else {
+    //console.log('fetchDuckList ????');
     for(let i = 0; i < images.length; i++){
       let url = baseURL + images[i];
-      const duck = {
+      const duck: IModelExplorePet = {
         url : url,
         name : 'Jessy',
         date_time: '01 Nov 2021',
@@ -52,13 +47,13 @@ function analyzeAcqMsg(next, action, msg){
     }
   }
 
-  if(http == undefined && !Array.isArray(http)){
+  if(!http?.length){
     // nothing
   }
   else {
     for(let i = 0; i < http.length; i++){
       let url = baseURL + http[i];
-      const duck = {
+      const duck: IModelExplorePet = {
         url : url,
         name : 'Jessy',
         date_time: '01 Nov 2021',

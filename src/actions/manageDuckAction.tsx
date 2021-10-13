@@ -1,8 +1,7 @@
 import { ACT_ADD_DUCK } from '../constants';
 
 
-function addDuck(name, uri, notes)
-{
+export const addDuck = (name: string, uri: string, notes: string) => {
   return {
     type: ACT_ADD_DUCK,
     payload:{
@@ -11,10 +10,4 @@ function addDuck(name, uri, notes)
       notes: notes,
     }
   }
-}
-
-const manageDuckAction = {
-  addDuck,
 };
-
-export  { manageDuckAction };

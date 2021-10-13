@@ -4,10 +4,25 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground,
 
 const WindowWidth = Dimensions.get('window').width;
 
-const WishlistDuck = ({navigation, info, removeItem}) => {
-  const {id, name, uri, url, date_time, info_url } = info ;
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { removeWishist } from '../actions/localWishlistAction';
+
+// interface IProps {
+//   id: string,
+//   name: string,
+//   url: string,
+//   info_url?: string,
+// }
+
+export const WishlistDuck = ({info}) => {
+//export const WishlistDuck = (props: IProps) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const {id, name, uri, url, date_time, info_url } = info;
   let addedDuck = false;
-  //console.log('AAAa = ' + url);
+  //console.log('WishlistDuck = ' + JSON.stringify(info));
   if(url === undefined || url == '') {
     return(
       <View style={duckStyle.container}>
@@ -36,7 +51,7 @@ const WishlistDuck = ({navigation, info, removeItem}) => {
           </View>
           <View style={{position: 'absolute', top: 250, left: WindowWidth - 100, right: 0, bottom: 10, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
             <Text style={duckStyle.text1}
-                  onPress={() => removeItem(id, name)}
+                  onPress={() => dispatch(removeWishist(id, name))}
             > -Remove </Text>
           </View>
         </ImageBackground>
@@ -135,5 +150,3 @@ const duckStyle = StyleSheet.create(
     },
   }
 );
-
-export default WishlistDuck;

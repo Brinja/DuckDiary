@@ -1,7 +1,10 @@
 import { ACT_SHARE_DUCK, } from '../constants';
 
+interface IUploadStore {
+  status: string,
+}
 
-const initialState = {
+const initialState: IUploadStore = {
   status: '',
 };
 
@@ -15,13 +18,14 @@ function onShareDuck(state, action)
 }
 
 
-function shareDuck(state = initialState, action) {
+export const shareDuck = (
+  state: IUploadStore = initialState,
+  action
+):IUploadStore => {
   switch (action.type) {
     case ACT_SHARE_DUCK:
       //return onShareDuck(state, action);
     default:
       return state;
   }
-}
-
-export default shareDuck;
+};

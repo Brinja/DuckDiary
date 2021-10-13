@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView, TextInput, StyleSheet,
   View, Dimensions, TouchableOpacity,
@@ -11,43 +11,27 @@ import * as ImagePicker from 'react-native-image-picker';
 
 const WindowWidth = Dimensions.get('window').width;
 import { THEMACOLOR } from '../constants';
-import DuckTitle from './DuckTitle';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { addDuck } from '../actions/manageDuckAction';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import { IStoreState,  } from '../types/IStore';
 
-import { manageDiaryAction } from '../actions/manageDiaryAction';
-import manageDuckDiary from '../reducers/manageDuckDiary';
+export const AddDuck = () => {
+  const [ duckName, setDuckName ] = useState('');
+  const [ duckNote, setDuckNote ] = useState('');
+  const [ duckURI, setDuckURI ] = useState('');
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const duckStore = useSelector((state: IStoreState) => state.manageDuck);
 
-class AddDiary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {duckNote: ''};
-    this.state = {duckURI: ''};
-
-    this.pickImage = this.pickImage.bind(this);
-    this.addNewDiary = this.addNewDiary.bind(this);
-  }
-
-  updateName = (name) =>
-  {
-    //console.log('updateName');
-    this.setState({duckName: name});
+  const onChangeText = (func: React.Dispatch<React.SetStateAction<string>>) => (
+    text: string,
+  ) => {
+    func(text);
   };
 
-  updateNote = (text) =>
-  {
-    //console.log('updateNote');
-    this.setState({duckNote: text});
-  };
-
-  updateURI = (uri) =>
-  {
-    //console.log('updateURI');
-    this.setState({duckURI: uri});
-  };
-
-  pickImage = () =>
+  const pickImage = () =>
   {
     //console.log('pickImage');
     let options = {
@@ -69,46 +53,46 @@ class AddDiary extends Component {
       if(assets == undefined){
         return;
       }
-      console.log('INFO uri = ' + assets[0].uri);
-      console.log('INFO type = ' + assets[0].type);
-      console.log('INFO fileName = ' + assets[0].fileName);
-      console.log('INFO fileSize = ' + assets[0].fileSize);
-      this.updateURI(assets[0].uri);
+
+      //console.log('INFO = ' + assets[0].uri);
+      //this.updateURI(assets[0].uri);
+      setDuckURI(assets[0].uri);
     });
   };
 
-  addNewDiary = (id, uri, note) => {
-    //console.log('addNewDuck');
-    const currentProps = this.props;
-    currentProps.onAddDiary(id, uri, note);
-    currentProps.navigation.goBack();
+  const addNewDuck = (name: string, uri: string, note: string) => {
+    dispatch(addDuck(name, uri, note));
+    navigation.goBack();
   };
 
 
-  render() {
-    const { navigation, onCreateDuck } = this.props;
-    const { duckName, duckNote, duckURI } = this.state;
-    const info = {
-      date_birth: this.props.route.params.date_birth,
-      name: this.props.route.params.name,
-      profile_uri: this.props.route.params.uri,
-    };
+  return(
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: THEMACOLOR }}>
+      <DuckImage funcPickImage={pickImage} uri={duckURI} />
+      <View style={duckStyle.container3} >
+        <TextInput style={duckStyle.text}
+                  placeholder='>>> Give a name                                       '
+                  value = {duckName}
+                  multiline={true}
+                  onChangeText = {onChangeText(setDuckName)}
+        />
+      </View>
+      <View style={duckStyle.container4} >
+        <TextInput style={duckStyle.text}
+                  placeholder='>>> About this lovely one                                       '
+                  value = {duckNote}
+                  multiline={true}
+                  onChangeText = {onChangeText(setDuckNote)}
+        />
+      </View>
+      <View style={{flex: 0, flexDirection: 'row', alignItems: 'stretch',}}>
+      <Text style={duckStyle.text_bnt} onPress={() => navigation.goBack()} > Cancel </Text>
+      <Text>{'                  '} </Text>
+      <Text style={duckStyle.text_bnt} onPress={() => {addNewDuck(duckName, duckURI, duckNote)}} > Save </Text>
+      </View>
+    </SafeAreaView>
+  );
 
-    //console.log('AAAAAaAAA = ' + JSON.stringify(info));
-
-    return(
-      <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: THEMACOLOR }}>
-        <DuckTitle info={info}/>
-        <DuckImage funcPickImage={this.pickImage} uri={duckURI} />
-        <DuckNote noteFunc={this.updateNote} textNote={duckNote}/>
-        <View style={{flex: 0, flexDirection: 'row', alignItems: 'stretch',}}>
-        <Text style={duckStyle.text_bnt} onPress={() => navigation.goBack()} > Cancel </Text>
-        <Text>{'                  '} </Text>
-        <Text style={duckStyle.text_bnt} onPress={() => {this.addNewDiary(this.props.route.params.duck_id, duckURI, duckNote)}} > Save </Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
 }
 
 const DuckImage = ({funcPickImage, uri}) => {
@@ -136,19 +120,6 @@ const DuckImage = ({funcPickImage, uri}) => {
     </TouchableOpacity>
     }
     </View>
-  );
-};
-
-const DuckNote = ({noteFunc, textNote}) => {
-  return(
-  <View style={duckStyle.container4} >
-    <TextInput style={duckStyle.text}
-              placeholder='>>> Whats about this lovely one today ?                                  '
-              value = {textNote}
-              multiline={true}
-              onChangeText = {(text) => noteFunc(text)}
-    />
-  </View>
   );
 };
 
@@ -278,20 +249,3 @@ const duckStyle = StyleSheet.create(
     },
   }
 );
-
-function mapStateToProps(state){
-  //console.log('mapStateToProps');
-  const { status } = state.manageDuckDiary;
-  return {
-    status,
-  };
-}
-
-function mapDispatchToProps(dispatch)
-{
-  return{
-      onAddDiary: (id, uri, notes) => {dispatch(manageDiaryAction.addDiary(id, uri, notes));},
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddDiary);
