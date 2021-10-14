@@ -1,0 +1,9 @@
+export const USER_PROFILE = 'USER_PROFILE';
+export const ID = 'id';
+export const CREATE_TIME = 'create_time';
+export const NAME = 'name';
+export const ABOUT = 'about';
+export const TOTAL_DUCK = 'total_duck';
+export const TOTAL_BREED = 'total_breed';
+export const TOTAL_STAR = 'total_start';
+export const LANGUAGE = 'language';

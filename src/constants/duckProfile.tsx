@@ -1,0 +1,11 @@
+export const DUCK_PROFILE = 'DUCK_PROFILE';
+export const ID = 'id';
+export const BREED = 'breed';
+export const DATE_BIRTH = 'date_birth';
+export const NAME = 'name';
+export const ABOUT = 'about';
+export const OWNER_ID = 'owner_id';
+export const STAR = 'star';
+export const SOCIAL = 'social';
+export const PROFILE_UIR = 'profile_uri';
+export const PROFILE_URL = 'profile_url';
