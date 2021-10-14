@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -9,14 +9,12 @@ import { THEMACOLOR } from '../constants';
 import { WishlistDuck } from '../components/WishlistDuck';
 
 
-import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import { loadWishlist, removeWishist } from '../actions/localWishlistAction';
+import { loadWishlist } from '../actions/localWishlistAction';
 import { IStoreState, IWishlistState } from '../types/IStore';
 
 
 export const HomeLeft = () =>  {
-  const navigation = useNavigation();
   const dispatch = useDispatch();
   const homeLeftStore: IWishlistState = useSelector((state: IStoreState) => state.localWishlist);
 

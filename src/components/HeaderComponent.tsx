@@ -2,6 +2,8 @@ import React from 'react';
 import { View, TouchableOpacity, Text,
         StyleSheet, Image, Dimensions } from 'react-native';
 
+import { TranslatableText } from '../components/LanguageProvider';
+
 const WindowWidth = Dimensions.get('window').width;
 
 const HeaderComponent = ({navigation, info}) => {
@@ -14,7 +16,13 @@ const HeaderComponent = ({navigation, info}) => {
       <View style={{flex: 0, width: 130, height: 120, marginLeft: 15,}} >
       <Text style={{color: '#426c82', fontSize: 20 , fontWeight: '400',}}
             onPress={() => {navigation.navigate('AddDuck')}}
-        > + Add Duck </Text>
+        >
+         <TranslatableText dictionary={{
+           swedish: '+ Lägg till Pet',
+           english: '+ Add Pet',
+           malay: '+ Tambah Haiwan Peliharaan'
+         }}/>
+        </Text>
       </View>
     </View>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView, StyleSheet,
   View,
@@ -9,13 +9,12 @@ import { THEMACOLOR } from '../constants';
 import { DuckStar } from '../components/DuckStar';
 
 
-import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import { fetchDuckList, addToWishList, clearMsg } from '../actions/fetchDuckListAction';
+import { fetchDuckList, clearMsg } from '../actions/fetchDuckListAction';
 import { IStoreState, IExploreState } from '../types/IStore';
 
 export const HomeRight = () => {
-  const navigation = useNavigation();
+
   const dispatch = useDispatch();
   const homeRightStore: IExploreState = useSelector((state: IStoreState) => state.exploreDuck);
 
@@ -91,7 +90,6 @@ const wishlistStyle = StyleSheet.create(
       marginBottom: 0,
       marginLeft: 0,
       marginRight: 0,
-      borderRadius: 0,
       backgroundColor: '#afb5a7',
       borderColor: 'transparent',
       borderWidth:  0,

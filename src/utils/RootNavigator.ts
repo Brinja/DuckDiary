@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+export const LanguageContext = React.createContext();
+export const LanguageConsumer = LanguageContext.Consumer;
+
 export const isMountedRef = React.createRef();
 export const isOnlineRef = React.createRef();
 export const isLoggedInRef = React.createRef();

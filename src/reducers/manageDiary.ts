@@ -3,10 +3,10 @@ import { IDiary, initDiaryState } from '../types/IStore';
 
 //# Action
 import { ACT_LOAD_DIARY, ACT_LOAD_DUCK_DIARY } from '../constants';
-import { IModelDiary, IModelDuckDiary, IModelDuckProfile } from '../types/IModel';
 
 
-function onLoadDiary(state, action)
+
+function onLoadDiary(state: IDiary, action: any)
 {
   return{
     ...state,
@@ -14,7 +14,7 @@ function onLoadDiary(state, action)
   }
 }
 
-function onLoadDuckDiary(state, action)
+function onLoadDuckDiary(state: IDiary, action: any)
 {
   return{
     ...state,
@@ -25,7 +25,7 @@ function onLoadDuckDiary(state, action)
 
 export const manageDiary = (
   state: IDiary = initDiaryState,
-  action
+  action: any
 ): IDiary => {
   switch (action.type) {
     case ACT_LOAD_DIARY:

@@ -6,7 +6,7 @@ import { ACT_API_FETCH_DUCK_LIST, ACT_CLEAR_WISHLISH_MSG, ACT_DISPLAY_WISHLISH_M
 
 
 
-function onExploreDuck(state, action){
+function onExploreDuck(state:IExploreState, action: any){
   return{
     ...state,
     images: action.payload.images === undefined ? [] : action.payload.images,
@@ -14,14 +14,14 @@ function onExploreDuck(state, action){
   }
 }
 
-function onClearMsg(state, action){
+function onClearMsg(state:IExploreState, action: any){
   return{
     ...state,
     msg: '',
   }
 }
 
-function onDisplayMsg(state, action){
+function onDisplayMsg(state: IExploreState, action: any){
   return{
     ...state,
     msg: ' Added ! ',
@@ -30,7 +30,7 @@ function onDisplayMsg(state, action){
 
 export const exploreDuck = (
   state: IExploreState = initExploreState,
-  action
+  action: any
 ):IExploreState => {
   switch (action.type) {
     case ACT_API_FETCH_DUCK_LIST:

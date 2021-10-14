@@ -18,6 +18,7 @@ import LocalStore from './src/components/LocalStore';
 
 import { THEMACOLOR } from './src/constants';
 import { navigationRef, } from './src/utils/RootNavigator';
+import { LanguageProvider } from './src/components/LanguageProvider';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,7 @@ function NotFoundScreen({ navigation, route }) {
 export const AppNavigator = () => {
 
   return(
+    <LanguageProvider>
     <NavigationContainer ref={navigationRef} linking={linking} fallback={<Text>Loading...</Text>} >
       <Stack.Navigator screenOptions={{
           headerShown: false
@@ -81,7 +83,9 @@ export const AppNavigator = () => {
         <Stack.Screen name="Profile" component={ProfilePage} />
         <Stack.Screen name="LocalStore" component={LocalStore} />
         <Stack.Screen name="NotFound" component={NotFoundScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
+    </LanguageProvider>
   );
 };

@@ -6,7 +6,7 @@ import { ACT_LOAD_DUCK_DIARY, ACT_ADD_DIARY, ACT_API_SHARE_DUCK_RES,
         ACT_API_SHARE_DUCK_CLEAR_MSG } from '../constants';
 
 
-function onLoadDuckDiary(state, action)
+function onLoadDuckDiary(state: IPetDiary, action: any)
 {
   return{
     ...state,
@@ -16,15 +16,16 @@ function onLoadDuckDiary(state, action)
   }
 }
 
-function onAddDiary(state, action)
+function onAddDiary(state: IPetDiary, action: any)
 {
+  const { payload } = action;
   return{
     ...state,
-    duck_diary: action.payload.duck_diary === undefined ? {} : action.payload.duck_diary,
+    duck_diary: payload.duck_diary === undefined ? {} : payload.duck_diary,
   }
 }
 
-function onShareDuckMessage(state, action)
+function onShareDuckMessage(state: IPetDiary, action: any)
 {
   return{
     ...state,
@@ -32,7 +33,7 @@ function onShareDuckMessage(state, action)
   }
 }
 
-function onClearShareDuckMsg(state, action)
+function onClearShareDuckMsg(state: IPetDiary, action: any)
 {
   return{
     ...state,
@@ -42,7 +43,7 @@ function onClearShareDuckMsg(state, action)
 
 export const manageDuckDiary = (
   state: IPetDiary = initPetState,
-  action
+  action: any
 ): IPetDiary => {
   switch (action.type) {
     case ACT_LOAD_DUCK_DIARY:

@@ -9,7 +9,7 @@ const GET_LIST = 'GET_LIST';
 const POST_UPLOAD_IMAGE = 'POST_UPLOAD_IMAGE';
 
 export interface IRandomApi {
-  txnType: number,
+  txnType: string,
 }
 
 

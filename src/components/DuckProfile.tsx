@@ -2,22 +2,36 @@ import React from 'react';
 import { View, TouchableOpacity, Text,
         StyleSheet, Image, Dimensions } from 'react-native';
 
+import { TranslatableText } from '../components/LanguageProvider';
 const WindowWidth = Dimensions.get('window').width;
 
-const DuckProfile = ({navigation, info}) => {
-  const { id, about, name, profile_uri , profile_url, date_birth } = info == undefined ? {} : info;
+import { IModelPetProfile  } from '../types/IModel';
+
+interface IProps {
+  navigation: any,
+  info: IModelPetProfile,
+}
+
+const DuckProfile = (props : IProps) => {
+  const { id, about, name, profile_uri , profile_url, date_birth } = props.info == undefined ? {} : props.info;
   //console.log('PROFILE URI = ' + profile_uri);
 
   return(
     <View style={headerStyle.container}>
       <View style={{flex: 0, flexDirection: 'row', alignItems: 'stretch',}}>
-        <DuckLogo navigation={navigation} uri={profile_uri} url={profile_url} />
+        <DuckLogo navigation={props.navigation} uri={profile_uri} url={profile_url} />
         <DuckName name={name} date_birth={date_birth} />
       </View>
       <View style={{flex: 0, width: 130, height: 120, marginLeft: 15,}} >
       <Text style={{color: '#426c82', fontSize: 20 , fontWeight: '400',}}
-            onPress={() => {navigation.navigate('AddDiary', {duck_id: id, name: name, uri: profile_uri, date_birth: date_birth} )}}
-        > + Add Diary </Text>
+            onPress={() => {props.navigation.navigate('AddDiary', {duck_id: id, name: name, uri: profile_uri, date_birth: date_birth} )}}
+        >
+        <TranslatableText dictionary={{
+          swedish: '+ Lägg till dagbok',
+          english: '+ Add Diary ',
+          malay: '+Tambah Diari'
+        }}/>
+        </Text>
       </View>
     </View>
   );

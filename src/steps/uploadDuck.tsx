@@ -1,5 +1,5 @@
 import React from 'react';
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 
 import { ACT_API_SHARE_DUCK_RES } from '../constants';
 
@@ -7,12 +7,18 @@ import randomDuck from '../api/RandomDuck';
 
 function uploadDuck(next, action)
 {
-  requestFilesAcessPermission().then(()=>{
+  if(Platform.OS === 'ios')
+  {
     uploadDuckA(next, action);
-    }).catch(err => {
-      next(action);
-      return;
-  });
+  }
+  else {
+    requestFilesAcessPermission().then(()=>{
+      uploadDuckA(next, action);
+      }).catch(err => {
+        next(action);
+        return;
+    });
+  }
 }
 
 function uploadDuckA(next, action)

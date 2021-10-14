@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.9",
+    "@react-native-picker/picker": "^2.1.0",
     "@react-navigation/bottom-tabs": "^6.0.7",
     "@react-navigation/native": "^6.0.4",
     "@react-navigation/native-stack": "^6.2.2",
+    "ajv": "^8.6.3",
     "install": "^0.13.0",
     "npm": "^8.0.0",
     "react": "17.0.2",

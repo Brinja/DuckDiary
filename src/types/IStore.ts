@@ -1,21 +1,5 @@
-import { IModelDiary, IModelPetDiary, IModelPetProfile,
+import { IModelDiary, IModelPetDiary, IModelPetProfile, IModelSocialNotes,
         IModelBreed, IModelExplorePet } from './IModel';
-//#
-export interface IStoreState {
-  login: ILoginStore,
-  diary: IDiary,
-  wishlist: IWishlistState,
-  explore: IExploreState,
-  pet_diary: IPetDiary,
-}
-
-export const initStore: IStoreState = {
-  login: initLogInStore,
-  diay: initDiaryState,
-  wishlist: initWishlistState,
-  explore: initExploreState,
-  pet_diary: initPetState,
-};
 
 //# LogIn
 export interface ILoginStore {
@@ -31,15 +15,33 @@ export const initLogInStore: ILoginStore = {
 // End Login
 
 //# Pet Diary
+
+const initSocialNotes:IModelSocialNotes = {
+  name: '',
+  message:'',
+};
+const initDuckProfile: IModelPetProfile = {
+  id: '',
+  breed: '',
+  name: '',
+  date_birth: '',
+  about: '',
+  owner_id: '',
+  star: '',
+  profile_uri: '',
+  profile_url: '',
+  social: [initSocialNotes,],
+};
+
 export interface IPetDiary {
   duck_diary: IModelPetDiary,
-  duck_proifle: IModelPetProfile,
+  duck_profile: IModelPetProfile,
   msg: string,
 }
 
 export const initPetState: IPetDiary = {
   duck_diary: {},
-  duck_profile: {},
+  duck_profile: initDuckProfile,
   msg: '',
 };
 // End Pet Dairay
@@ -48,13 +50,13 @@ export const initPetState: IPetDiary = {
 export interface IDiary {
   diary: IModelDiary[],
   duck_diary: IModelPetDiary[],
-  duck_proifle: IModelPetProfile,
+  duck_profile: IModelPetProfile,
 }
 
 export const initDiaryState: IDiary = {
   diary: [],
   duck_diary: [],
-  duck_proifle: {},
+  duck_profile: initDuckProfile,
 };
 // End Diary
 
@@ -87,3 +89,41 @@ export const initExploreState: IExploreState = {
 };
 
 // End Image for Explore
+
+///// Not important
+export interface IDuckStore {
+  status: string,
+}
+
+export const initDuckState:IDuckStore = {
+  status: '',
+};
+
+export interface IUploadStore {
+  status: string,
+}
+
+export const initUploadState: IUploadStore = {
+  status: '',
+};
+
+//#
+export interface IStoreState {
+  manageLogin: ILoginStore,
+  manageDiary: IDiary,
+  localWishlist: IWishlistState,
+  exploreDuck: IExploreState,
+  manageDuckDiary: IPetDiary,
+  manageDuck: IDuckStore,
+  shareDuck: IUploadStore,
+}
+
+export const initStore: IStoreState = {
+  manageLogin: initLogInStore,
+  manageDiary: initDiaryState,
+  localWishlist: initWishlistState,
+  exploreDuck: initExploreState,
+  manageDuckDiary: initPetState,
+  manageDuck: initDuckState,
+  shareDuck: initUploadState,
+};

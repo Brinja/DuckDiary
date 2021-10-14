@@ -5,6 +5,8 @@ import {
   Text, TextInput,
 } from 'react-native';
 
+import { Picker } from '@react-native-picker/picker';
+
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -15,10 +17,15 @@ const WindowWidth = Dimensions.get('window').width;
 import { IStoreState, ILoginStore } from '../types/IStore';
 import { startLogIn, clearLogIn } from '../actions/loginAction';
 
+import { TranslatableText } from '../components/LanguageProvider';
+import { LanguageConsumer } from '../utils/RootNavigator';
+
 
 export const LoginContainer = () => {
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
+  //const [selectedValue, setSelectedValue] = useState("English");
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const loginStore:ILoginStore = useSelector((state: IStoreState) => state.manageLogin);
@@ -82,14 +89,34 @@ export const LoginContainer = () => {
         </View>
         <View style={loginStyle.container4} >
           <Text style={loginStyle.text_bnt}
-          onPress={() => {dispatch(startLogIn(username, password))}} > LogIn </Text>
+          onPress={() => {dispatch(startLogIn(username, password))}} >
+            <TranslatableText dictionary={{
+              swedish: 'Logga In',
+              english: 'LogIn',
+              malay: 'Log Masuk'
+            }} />
+          </Text>
+        </View>
+        <View>
+          <LanguageConsumer>
+          {({language, changeLanguage}) =>
+          <Picker
+            selectedValue={language}
+            style={{ height: 50, width: 150 }}
+            onValueChange={(itemValue, itemIndex) => changeLanguage(itemValue)}
+            >
+            <Picker.Item label='Engish' value='english' />
+            <Picker.Item label='Swedish' value='swedish' />
+            <Picker.Item label='Malay' value='malay' />
+          </Picker>
+          }
+          </LanguageConsumer>
         </View>
       </SafeAreaView>
     );
   }
 
 };
-
 
 const loginStyle = StyleSheet.create(
   {

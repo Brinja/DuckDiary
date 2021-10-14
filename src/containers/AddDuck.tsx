@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView, TextInput, StyleSheet,
   View, Dimensions, TouchableOpacity,
   Text, ImageBackground,
-  Button,
 } from 'react-native';
 
-import { PermissionsAndroid } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 
 const WindowWidth = Dimensions.get('window').width;
@@ -14,8 +12,10 @@ import { THEMACOLOR } from '../constants';
 
 import { addDuck } from '../actions/manageDuckAction';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import { IStoreState,  } from '../types/IStore';
+import { useDispatch } from 'react-redux';
+//import { IStoreState, IDuckStore } from '../types/IStore';
+
+import { TranslatableText } from '../components/LanguageProvider';
 
 export const AddDuck = () => {
   const [ duckName, setDuckName ] = useState('');
@@ -23,7 +23,7 @@ export const AddDuck = () => {
   const [ duckURI, setDuckURI ] = useState('');
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const duckStore = useSelector((state: IStoreState) => state.manageDuck);
+  //const duckStore: IDuckStore = useSelector((state: IStoreState) => state.manageDuck);
 
   const onChangeText = (func: React.Dispatch<React.SetStateAction<string>>) => (
     text: string,
@@ -86,9 +86,21 @@ export const AddDuck = () => {
         />
       </View>
       <View style={{flex: 0, flexDirection: 'row', alignItems: 'stretch',}}>
-      <Text style={duckStyle.text_bnt} onPress={() => navigation.goBack()} > Cancel </Text>
+      <Text style={duckStyle.text_bnt} onPress={() => navigation.goBack()} >
+       <TranslatableText dictionary={{
+         swedish: 'Avbryt',
+         english: 'Cancel',
+         malay: 'Batal'
+       }}/>
+       </Text>
       <Text>{'                  '} </Text>
-      <Text style={duckStyle.text_bnt} onPress={() => {addNewDuck(duckName, duckURI, duckNote)}} > Save </Text>
+      <Text style={duckStyle.text_bnt} onPress={() => {addNewDuck(duckName, duckURI, duckNote)}} >
+       <TranslatableText dictionary={{
+         swedish: 'Spara',
+         english: 'Save',
+         malay: 'Jimat'
+       }}/>
+       </Text>
       </View>
     </SafeAreaView>
   );
@@ -104,7 +116,13 @@ const DuckImage = ({funcPickImage, uri}) => {
           <ImageBackground style={duckStyle.image}
             source={require('../assets/donald_duck.jpeg')} >
             <View style={{position: 'absolute', top: 120, left: 80, right: 0, bottom: 0, justifyContent: 'flex-start', alignItems: 'flex-start'}}>
-              <Text style={duckStyle.text_title} > {'>>'}Add Picture{'<<'} </Text>
+              <Text style={duckStyle.text_title} > {'>>'}
+              <TranslatableText dictionary={{
+                swedish: 'Lägg till bild',
+                english: 'Add Picture',
+                malay: 'Tambah Gambar'
+              }}/>
+              {'<<'} </Text>
             </View>
           </ImageBackground>
         </View>

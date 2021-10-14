@@ -6,7 +6,7 @@ import { ACT_API_LOGIN, ACT_CLEAR_LOGIN, ACT_LOGIN_RES } from '../constants';
 
 export const manageLogin = (
   state: ILoginStore = initLogInStore,
-  action
+  action: any
 ): ILoginStore => {
   switch (action.type) {
     case ACT_API_LOGIN : {
@@ -23,7 +23,7 @@ export const manageLogin = (
 };
 
 
-function onStartLogin(state, action)
+function onStartLogin(state: ILoginStore, action: any)
 {
   return{
     ...state,
@@ -32,7 +32,7 @@ function onStartLogin(state, action)
   }
 }
 
-function onLoginResult(state, action)
+function onLoginResult(state: ILoginStore, action: any)
 {
   return{
     ...state,
@@ -41,7 +41,7 @@ function onLoginResult(state, action)
   }
 }
 
-function onCleanLogIn(state, action)
+function onCleanLogIn(state: ILoginStore, action: any)
 {
   return{
     ...state,

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView, TextInput, StyleSheet,
   View, Dimensions, TouchableOpacity,
   Text, ImageBackground,
-  Button,
 } from 'react-native';
 
 const WindowWidth = Dimensions.get('window').width;
@@ -11,8 +10,8 @@ import { THEMACOLOR } from '../constants';
 
 import { shareADuck } from '../actions/uploadAction';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import { IStoreState } from '../types/IStore';
+import { useDispatch } from 'react-redux';
+//import { IStoreState, IUploadStore } from '../types/IStore';
 
 
 export const SharePet = () => {
@@ -21,7 +20,7 @@ export const SharePet = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const uploadStore = useSelector((state: IStoreState) => state.shareDuck);
+  //const uploadStore: IUploadStore = useSelector((state: IStoreState) => state.shareDuck);
 
   const onChangeText = (func: React.Dispatch<React.SetStateAction<string>>) => (
     text: string,

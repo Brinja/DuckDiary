@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView, StyleSheet,
   View,
-  Text, FlatList, Dimensions,
+  Text, FlatList,
 } from 'react-native';
 
 
@@ -11,7 +11,7 @@ import DuckProfile from '../components/DuckProfile';
 import DiaryComponent from '../components/DiaryComponent';
 
 import { loadDuckDiary } from '../actions/manageDiaryAction';
-import { shareADuck, clearShareDuckMsg } from '../actions/uploadAction';
+import { clearShareDuckMsg } from '../actions/uploadAction';
 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -19,8 +19,6 @@ import { IStoreState, IPetDiary } from '../types/IStore';
 
 
 export const Diary = () => {
-  const [ duckNote, setDuckNote ] = useState('');
-  const [ duckURI, setDuckURI ] = useState('');
   const navigation = useNavigation();
   const route = useRoute();
   const dispatch = useDispatch();
@@ -31,6 +29,7 @@ export const Diary = () => {
     {
       dispatch(loadDuckDiary(route.params.duck_id));
     }
+    console.log('DUCK ID = ' + route.params.duck_id);
 
     return () => {
       // clean?
@@ -103,7 +102,6 @@ const diaryStyle = StyleSheet.create(
       marginBottom: 0,
       marginLeft: 0,
       marginRight: 0,
-      borderRadius: 0,
       backgroundColor: '#afb5a7',
       borderColor: 'transparent',
       borderWidth:  0,
